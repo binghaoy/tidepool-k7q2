@@ -1,4 +1,4 @@
-const V='tp-7f4591fb';
+const V='tp-521b0054';
 const CORE=['./','index.html','booking.html','leaflet.css','leaflet.js','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
 const TILE='tp-tiles';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)))});
