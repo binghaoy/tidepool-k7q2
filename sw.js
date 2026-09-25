@@ -1,4 +1,4 @@
-const V='tp-47596d51';
+const V='tp-4f27bbe7';
 const CORE=['./','index.html','booking.html','leaflet.css','leaflet.js','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
 const TILE='tp-tiles';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)))});
@@ -6,7 +6,7 @@ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 self.addEventListener('fetch',e=>{
  const u=new URL(e.request.url);
  if(e.request.method!=='GET')return;
- if(/autonavi\.com|openstreetmap\.org|arcgisonline\.com/.test(u.hostname)){
+ if(/autonavi\.com|openstreetmap\.org|arcgisonline\.com|^mt\d\.google\.com$/.test(u.hostname)){
   e.respondWith(caches.open(TILE).then(c=>c.match(e.request).then(hit=>hit||fetch(e.request).then(r=>{c.put(e.request,r.clone());return r}))));
   return;
  }

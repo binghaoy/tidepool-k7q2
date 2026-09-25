@@ -412,10 +412,11 @@ function initRideMap(){
   rmapInit=true;
   rmap=L.map('rmap',{scrollWheelZoom:true}).setView([36.8,-121.9],8);
   const amapL=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:['1','2','3','4'],attribution:'&copy; 高德地图'});
+  const gL=L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&hl=zh-CN&gl=US&x={x}&y={y}&z={z}',{maxZoom:20,subdomains:['0','1','2','3'],attribution:'&copy; Google'});
   const osmL=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'});
   amapL.addTo(rmap);
   const sw=L.control({position:'topright'});
-  sw.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===rBase)return;rmap.removeLayer(rBase==='amap'?amapL:osmL);(b.dataset.b==='amap'?amapL:osmL).addTo(rmap);rBase=b.dataset.b;d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});return d;};
+  sw.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button><button data-b="g">Google</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===rBase)return;const R={amap:amapL,osm:osmL,g:gL};rmap.removeLayer(R[rBase]);R[b.dataset.b].addTo(rmap);rBase=b.dataset.b;try{localStorage.setItem('tp-base',rBase)}catch(_){}d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});setTimeout(()=>{let s='';try{s=localStorage.getItem('tp-base')||''}catch(_){}if(s&&s!=='amap'){const x=d.querySelector('[data-b=\"'+s+'\"]');x&&x.click()}},0);return d;};
   sw.addTo(rmap);
   RDAYS.forEach(d=>{
     const g=L.layerGroup();
@@ -528,10 +529,11 @@ function initPdxMap(){
   pmapInit=true;
   pmap=L.map('pmap',{scrollWheelZoom:true}).setView([45.82,-122.9],8);
   const amapP=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:['1','2','3','4'],attribution:'&copy; 高德地图'});
+  const gP=L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&hl=zh-CN&gl=US&x={x}&y={y}&z={z}',{maxZoom:20,subdomains:['0','1','2','3'],attribution:'&copy; Google'});
   const osmP=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'});
   amapP.addTo(pmap);
   const swP=L.control({position:'topright'});
-  swP.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===pBase)return;pmap.removeLayer(pBase==='amap'?amapP:osmP);(b.dataset.b==='amap'?amapP:osmP).addTo(pmap);pBase=b.dataset.b;d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});return d;};
+  swP.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button><button data-b="g">Google</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===pBase)return;const R={amap:amapP,osm:osmP,g:gP};pmap.removeLayer(R[pBase]);R[b.dataset.b].addTo(pmap);pBase=b.dataset.b;try{localStorage.setItem('tp-base',pBase)}catch(_){}d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});setTimeout(()=>{let s='';try{s=localStorage.getItem('tp-base')||''}catch(_){}if(s&&s!=='amap'){const x=d.querySelector('[data-b=\"'+s+'\"]');x&&x.click()}},0);return d;};
   swP.addTo(pmap);
   PDAYS.forEach(d=>{
     const g=L.layerGroup();
@@ -619,5 +621,12 @@ function exportICS(){
   URL.revokeObjectURL(a.href);
 }
 </script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}</script></body>
+<script>(function(){if(!/iPhone|iPad|iPod/.test(navigator.userAgent))return;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="google.com/maps"]');if(!a)return;
+var u;try{u=new URL(a.href)}catch(_){return}var p=u.searchParams,d=p.get('destination'),q=p.get('query');if(!d&&!q)return;
+e.preventDefault();e.stopPropagation();
+var app=d?'comgooglemaps://?daddr='+encodeURIComponent(d)+'&directionsmode=driving':'comgooglemaps://?q='+encodeURIComponent(q);
+var gone=false,t=Date.now();function h(){if(document.hidden)gone=true}document.addEventListener('visibilitychange',h);
+location.href=app;
+setTimeout(function(){document.removeEventListener('visibilitychange',h);if(!gone&&!document.hidden&&Date.now()-t<4000)window.open(a.href,'_blank')},1600);},true);})();</script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}</script></body>
 </html>
