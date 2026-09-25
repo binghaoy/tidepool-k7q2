@@ -1,341 +1,605 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="leaflet.css">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#1e3a8a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Tidepool">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
-<style>body{padding-top:env(safe-area-inset-top)}.jump{top:env(safe-area-inset-top)}</style>
-<title>美西 2026 · 行程 + 预订</title><style>
-:root{--bg:#f5f7fa;--card:#fff;--line:#e5e7eb;--sub:#6b7280;--ink:#111827;--hot:#dc2626;--mid:#d97706;--ok:#16a34a;--blue:#2563eb}
-*{box-sizing:border-box}
-body{margin:0;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;padding:18px 20px}
-header h1{margin:0;font-size:20px}
-header p{margin:4px 0 0;opacity:.85;font-size:13px}
-main{max-width:1080px;margin:0 auto;padding:16px}
-.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.kpi{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-.kpi b{display:block;font-size:20px}
-.kpi span{color:var(--sub);font-size:12px}
-.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:14px}
-.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c,#9ca3af);border-radius:10px;padding:14px 16px;margin-bottom:12px}
-.card.done{opacity:.55}
-.card.done .ttl{text-decoration:line-through}
-.head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.head input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
-.ttl{font-weight:700;font-size:16px}
-.tag{font-size:11px;padding:1px 8px;border-radius:99px;color:#fff;background:var(--c)}
-.date{color:var(--sub);font-size:13px}
-.why{font-size:13px;color:#374151;margin:6px 0 8px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{border-top:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
-th{color:var(--sub);font-weight:500;font-size:12px}
-a.btn{display:inline-block;padding:2px 9px;margin:2px 4px 2px 0;border-radius:6px;background:#eff6ff;color:var(--blue);text-decoration:none;font-size:12.5px;border:1px solid #bfdbfe;white-space:nowrap}
-a.btn:hover{background:#dbeafe}
-a.btn.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
-.rec{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-.rec input,.rec select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:13px}
-.rec input.cf{flex:1;min-width:160px}
-.rec input.pr{width:110px}
-h2{font-size:15px;margin:22px 0 10px;color:#1e3a8a}
-ul.chk{margin:4px 0;padding-left:18px;font-size:13px}
-footer{text-align:center;color:var(--sub);font-size:12px;padding:20px}
-@media(max-width:640px){td:nth-child(3),th:nth-child(3){display:none}}
-
-.jump{position:sticky;top:0;z-index:9;max-width:100vw;background:#1e3a8a;display:flex;overflow-x:auto;gap:2px;padding:6px 8px}
-.jump a{color:#fff;text-decoration:none;font-size:12.5px;padding:3px 8px;border-radius:6px;white-space:nowrap;background:rgba(255,255,255,.12)}
-.day{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pc);border-radius:12px;padding:12px 14px;margin-bottom:14px;scroll-margin-top:44px}
-.dh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.dd{font-size:20px;font-weight:800}.dw{color:var(--sub)}
-.tg{color:#fff;font-size:11px;padding:1px 8px;border-radius:99px}.dt{font-weight:700;font-size:15px}
-ul.it{list-style:none;margin:8px 0;padding:0}
-ul.it li{display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px dashed #f0f0f0;font-size:13.5px}
-ul.it li b{flex:0 0 52px;color:var(--pc)}ul.it li span{flex:1}
-a.nv{text-decoration:none;font-size:16px;padding:0 4px}
-.st{font-size:13px;color:#374151;margin-top:6px}
-.pill{display:inline-block;margin-left:6px;font-size:12px;padding:1px 9px;border-radius:99px;background:#fee2e2;color:#b91c1c;text-decoration:none}
-.pill.ok{background:#dcfce7;color:#15803d}
-.bkwrap{margin-top:10px;scroll-margin-top:44px;max-width:100%;overflow-x:auto}
-html,body{overflow-x:hidden;max-width:100%}main{overflow-wrap:anywhere}
-td,th{word-break:break-word}a.btn{white-space:normal}
-</style></head><body>
-<header><h1>🗓 美西 2026 · 行程 + 预订</h1><p>9/26 → 10/12 · 逐日时间地点 + 🧭 Google 导航 · 需要预订的日子直接嵌入预订卡（红色=待订，绿色=已订）</p></header>
-<nav class="jump"><a href="#d0">9/26</a><a href="#d1">9/27</a><a href="#d2">9/28</a><a href="#d3">9/29</a><a href="#d4">9/30</a><a href="#d5">10/1</a><a href="#d6">10/2</a><a href="#d7">10/3</a><a href="#d8">10/4</a><a href="#d9">10/5</a><a href="#d10">10/6</a><a href="#d11">10/7</a><a href="#d12">10/8</a><a href="#d13">10/9</a><a href="#d14">10/10</a><a href="#d15">10/11</a><a href="#d16">10/12</a></nav>
+<title>美西行程 2026 · 9/26-10/12</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#ffffff; --ink:#1c2128; --sub:#6b7280; --line:#e5e7eb;
+  --bay:#0e9384; --pdx:#3572d6; --buf:#8a8f98; --ride:#e06c1f; --work:#7c5cd6; --fly:#334155; --home:#0f766e;
+  --ok:#16a34a; --hot:#dc2626; --warn:#ca8a04;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 20px 0}
+.h-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;max-width:1080px;margin:0 auto}
+h1{font-size:20px;font-weight:700}
+.h-meta{font-size:13px;color:var(--sub)}
+.count{font-size:13px;color:var(--hot);font-weight:600;margin-left:auto}
+.tabs{display:flex;gap:4px;max-width:1080px;margin:10px auto 0}
+.tab{border:none;background:none;padding:8px 16px;font-size:14px;color:var(--sub);cursor:pointer;border-radius:8px 8px 0 0;border-bottom:2px solid transparent}
+.tab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+main{max-width:1080px;margin:0 auto;padding:20px}
+section{display:none}
+section.on{display:block}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:13px;color:var(--sub)}
+.chip b{color:var(--ink)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
+.lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub)}
+.lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.actions{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;color:var(--ink);font-weight:500}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.day{display:flex;gap:0;position:relative}
+.rail{width:74px;flex:none;display:flex;flex-direction:column;align-items:center}
+.rail .dt{font-size:12px;font-weight:700;color:var(--ink)}
+.rail .dw{font-size:11px;color:var(--sub)}
+.rail .dot{width:12px;height:12px;border-radius:50%;margin:6px 0;flex:none;outline:3px solid var(--bg)}
+.rail .ln{width:2px;flex:1;background:var(--line)}
+.day:last-child .ln{display:none}
+.card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 14px 6px;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pc)}
+.c-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px}
+.c-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.badge{font-size:11px;font-weight:600;padding:2px 10px;border-radius:99px;color:#fff;background:var(--pc)}
+.loc{font-size:12px;color:var(--sub);margin-left:auto}
+.items{list-style:none}
+.items li{font-size:13.5px;padding:3px 0;color:#374151}
+.items b{display:inline-block;min-width:44px;color:var(--ink);font-weight:600}
+.c-foot{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--sub)}
+/* flights */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.f-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.f-no{font-size:13px;font-weight:600}
+.st{font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
+.st.booked{background:#dcfce7;color:#15803d}
+.st.todo{background:#fee2e2;color:#b91c1c}
+.st.confirm{background:#fef3c7;color:#a16207}
+.f-route{font-size:18px;font-weight:700;letter-spacing:.5px}
+.f-times{display:flex;gap:20px;margin:8px 0 4px}
+.f-times div{font-size:13px;color:var(--sub)}
+.f-times b{display:block;font-size:20px;color:var(--ink)}
+.f-note{font-size:12.5px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.f-date{font-size:12px;color:var(--sub)}
+/* packing */
+.pbar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 18px}
+.pbar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.ptext{font-size:13px;color:var(--sub)}
+.pcat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.pcat h3{font-size:14px;font-weight:700;margin-bottom:10px}
+.pitem{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:13.5px;cursor:pointer}
+.pitem input{margin-top:3px;accent-color:var(--ok)}
+.pitem.done span{color:var(--sub);text-decoration:line-through}
+/* todo */
+.tcard{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--tc);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:14px}
+.tcard.done{color:var(--sub)}
+.tcard .tag{font-size:11px;font-weight:700;margin-right:8px;color:var(--tc)}
+/* ride map */
+.rm-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:14px;align-items:start}
+#rmap,#pmap{height:calc(100vh - 150px);min-height:480px;border-radius:14px;border:1px solid var(--line);background:#e8ecef;z-index:1}
+.rm-side{max-height:calc(100vh - 150px);overflow:auto;padding-right:2px}
+.rmtabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.rmtab{border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:99px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600}
+.rmtab.on{color:#fff;border-color:transparent}
+.rmtab.on[data-rv="all"]{background:#1c2128}
+.rmtab.on[data-rv="d1"]{background:#ea580c}
+.rmtab.on[data-rv="d2"]{background:#b91c1c}
+.rmtab.on[data-pv="all"]{background:#1c2128}
+.rmtab.on[data-pv="d1"]{background:#2563eb}
+.rmtab.on[data-pv="d2"]{background:#16a34a}
+.rmtab.on[data-pv="d3"]{background:#ea580c}
+.rmtab.on[data-pv="d4"]{background:#7c3aed}
+.daycard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.daycard h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.daycard h2 i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.daycard .dsum{font-size:12.5px;color:var(--sub);margin:4px 0 10px}
+.rspot{display:flex;gap:10px;padding:8px 6px;border-top:1px dashed var(--line);cursor:pointer;border-radius:8px}
+.rspot:hover{background:#f6f8fa}
+.rspot .n{flex:none;width:22px;height:22px;border-radius:50%;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.rspot .st{min-width:0}
+.rspot .st b{display:block;font-size:13.5px;color:var(--ink)}
+.rspot .st span{font-size:12px;color:var(--sub)}
+.rspot .st .why{font-size:12px;color:#374151;margin-top:2px}
+.mleg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--sub);margin-bottom:12px}
+.mleg b{color:var(--ink)}
+.rtips{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ride);border-radius:10px;padding:10px 14px;font-size:12.5px;color:#374151;margin-bottom:12px}
+.rtips b{color:var(--ink)}
+.basemap-sw{background:#fff;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,.4);overflow:hidden;display:flex}
+.basemap-sw button{border:0;background:#fff;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--sub);font-weight:600}
+.basemap-sw button.on{background:var(--ink);color:#fff}
+.pop-t{font-size:14.5px;font-weight:700}
+.pop-c{display:inline-block;font-size:11px;color:#fff;border-radius:99px;padding:1px 9px;margin:4px 0 6px}
+.pop-time{font-size:12.5px;color:var(--sub)}
+.pop-note{font-size:12.5px;color:#374151;margin-top:6px;max-width:260px}
+.pop-nav{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:600;color:#2563eb;text-decoration:none;border:1px solid #bfdbfe;border-radius:8px;padding:3px 10px;background:#eff6ff}
+.pop-nav:hover{background:#dbeafe}
+.nav-link{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:#2563eb;text-decoration:none}
+.nav-link:hover{text-decoration:underline}
+footer{text-align:center;font-size:12px;color:var(--sub);padding:26px 0}
+@media (max-width:640px){
+  .rail{width:52px}
+  .items b{min-width:40px}
+  main{padding:14px}
+  .rm-grid{grid-template-columns:1fr}
+  #rmap,#pmap{height:60vh;min-height:380px}
+  .rm-side{max-height:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-top">
+    <h1>美西行程 2026</h1>
+    <span class="h-meta">9/26 – 10/12 · 湾区 × 波特兰 × 海岸线 × Hwy 1 × LA</span>
+    <span class="count" id="countdown"></span>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-v="trip">行程总览</button>
+    <button class="tab" data-v="ridemap">骑行地图</button>
+    <button class="tab" data-v="pdxmap">波特兰地图</button>
+    <button class="tab" data-v="flights">航班</button>
+    <button class="tab" data-v="pack">装备清单</button>
+    <button class="tab" data-v="todo">待办</button><a class="tab" href="booking.html" style="text-decoration:none">逐日+预订 ›</a>
+  </div>
+</header>
 <main>
-<div class="bar">
- <div class="kpi"><b id="k-done">0 / 9</b><span>已完成预订</span></div>
- <div class="kpi"><b id="k-sum">$0</b><span>已订合计</span></div>
- <div class="kpi"><b>$2,200 – 2,600</b><span>预算参考（不含 LA 报销）</span></div>
-</div>
-<div class="tip"><b>用法：</b>顶部日期条跳转到当天；🧭 打开 Google 地图；预订卡里的搜索链接已预填日期，订完填确认号和总价并勾选，当天的红色标签会变绿（保存在本机浏览器，与 booking.html 共用数据）。</div>
-
-<section class="day" id="d0" style="--pc:#64748b">
- <div class="dh"><span class="dd">9/26</span><span class="dw">周六</span><span class="tg" style="background:#64748b">交通</span><span class="dt">出发 · 香港→旧金山</span></div>
- <ul class="it"><li><b>22:30</b><span>UA878 香港起飞（已出票）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hong%20Kong%20International%20Airport">🧭</a></li><li><b>20:10</b><span>落地 SFO（同日到达）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=San%20Francisco%20International%20Airport">🧭</a></li><li><b>21:30</b><span>出关取行李，Uber ~40min → Mountain View</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=469%20Sierra%20Vista%20Avenue%20A%2C%20Mountain%20View%2C%20CA%2094043">🧭</a></li><li><b>深夜</b><span>Airbnb 自助入住（房东 Gang，16:00 后可入住），倒时差</span></li></ul>
- <div class="st">🛏 Mountain View Airbnb（已订） <a class="pill" href="#bk-sv1" data-pill="sv1">待订 · Mountain View Airbnb</a></div>
- <div id="bk-sv1" class="bkwrap"><div class="card" data-id="sv1" data-booked="Airbnb · Mountain View" style="--c:#16a34a">
- <div class="head"><input type="checkbox"><span class="ttl">Mountain View Airbnb（已订）</span><span class="tag">已订</span><span class="date">9/26 周六 → 9/28 周一 · 2 晚</span></div>
- <div class="why"><b>房东 Gang</b> · 469 Sierra Vista Avenue A, Mountain View, CA 94043<br>入住 <b>16:00 后</b> · 退房 <b>11:00 前</b>。你约 22:10 才到，<b>提前在 Airbnb 里和房东确认自助入住方式（门锁密码 / 钥匙箱）</b>。9/28 06:30 出发去 SFO 前自行退房。<br><b>行李：</b>Airbnb 不能像酒店那样寄存到 10/1，要么问房东能否代存 3 天，要么把大件带去波特兰（AS1411 需付托运费）。</div>
- <table>
-  <tr><th>项目</th><th>链接</th><th>备注</th></tr>
-  <tr><td><b>住处导航</b></td><td>
-   <a class="btn pri" target="_blank" href="https://www.google.com/maps/search/?api=1&query=469+Sierra+Vista+Ave+A%2C+Mountain+View%2C+CA+94043">Google 地图</a>
-   <a class="btn" target="_blank" href="https://www.airbnb.com/trips">Airbnb 行程</a>
-  </td><td>SFO → 此处 Uber 约 35-45 分钟</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号（Airbnb 行程页 HM 开头）"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d1" style="--pc:#0891b2">
- <div class="dh"><span class="dd">9/27</span><span class="dw">周日</span><span class="tg" style="background:#0891b2">湾区</span><span class="dt">南湾叙旧</span></div>
- <ul class="it"><li><b>上午</b><span>自然醒，倒时差</span></li><li><b>中午</b><span>湾区朋友叙旧饭局</span></li></ul>
- <div class="st">🛏 Mountain View Airbnb（已订） </div>
- 
-</section>
-<section class="day" id="d2" style="--pc:#16a34a">
- <div class="dh"><span class="dd">9/28</span><span class="dw">周一</span><span class="tg" style="background:#16a34a">波特兰·海岸</span><span class="dt">飞波特兰 · 哥伦比亚河峡谷</span></div>
- <ul class="it"><li><b>06:30</b><span>Airbnb 退房，Uber 赴 SFO（约 35-45min）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=San%20Francisco%20International%20Airport">🧭</a></li><li><b>08:23</b><span>AS1411 SFO→PDX 起飞（已出票）</span></li><li><b>10:09</b><span>落地 PDX，10:30 机场取车</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Portland%20International%20Airport">🧭</a></li><li><b>中午</b><span>I-84 东进 Columbia River Gorge（45min）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Columbia%20River%20Gorge">🧭</a></li><li><b>下午</b><span>Latourell Falls</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Latourell%20Falls">🧭</a></li><li><b>下午</b><span>Multnomah Falls</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Multnomah%20Falls">🧭</a></li><li><b>下午</b><span>Hood River</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hood%20River%2C%20OR">🧭</a></li><li><b>19:00</b><span>（可选）Mt. Tabor Park 山顶看日落</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Mt.%20Tabor%20Park%20Portland">🧭</a></li><li><b>晚</b><span>Evermore Guesthouse 自助入住（15:00 后）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=3860%20SE%20Clinton%20St%2C%20Portland%2C%20OR%2097202">🧭</a></li><li><b>晚</b><span>SE Division St 步行晚饭 / Hawthorne Blvd 闲逛</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=SE%20Division%20St%20Portland">🧭</a></li></ul>
- <div class="st">🛏 Evermore Guesthouse（已订） <a class="pill" href="#bk-car" data-pill="car">待订 · PDX 租车</a><a class="pill" href="#bk-pdx" data-pill="pdx">待订 · Portland Evermore</a></div>
- <div id="bk-car" class="bkwrap"><div class="card" data-id="car" style="--c:var(--hot)">
- <div class="head"><input type="checkbox"><span class="ttl">PDX 机场租车</span><span class="tag">急</span><span class="date">9/28 周一 10:30 取 → 10/1 周四 14:30 还 · 4 天</span></div>
- <div class="why"><b>首选中文平台全险套餐</b>（租租车 / Trip.com，Alamo / Enterprise / Budget 均可）：认驾照翻译件，含车损 + 第三者责任，柜台基本零加购。下单前看清是<b>「车行零自付险」</b>还是<b>「先垫付后理赔」</b>，价差不大选前者。车型：紧凑/中型 SUV 即可（海岸路段有坡）。</div>
- <table>
-  <tr><th>渠道</th><th>链接</th><th>参考价</th></tr>
-  <tr><td><b>中文全险</b></td><td>
-   <a class="btn pri" target="_blank" href="https://www.zuzuche.com/">租租车</a>
-   <a class="btn pri" target="_blank" href="https://us.trip.com/carhire/to-united-states-66/portland-25858/portland-international-airport-pdx/">Trip.com PDX</a>
-  </td><td>$250-350 全包</td></tr>
-  <tr><td>行情底线</td><td>
-   <a class="btn" target="_blank" href="https://www.kayak.com/cars/PDX/2026-09-28-10h/2026-10-01-14h">Kayak（已填日期）</a>
-   <a class="btn" target="_blank" href="https://www.priceline.com/drive/">Priceline</a>
-  </td><td>先看裸价</td></tr>
-  <tr><td>直订折扣</td><td>
-   <a class="btn" target="_blank" href="https://www.budget.com/">Budget（码 A740300）</a>
-   <a class="btn" target="_blank" href="https://www.costcotravel.com/Rental-Cars">Costco Travel（朋友代订）</a>
-  </td><td>裸价低，柜台险 $30-40/天</td></tr>
-  <tr><td>订后盯价</td><td><a class="btn" target="_blank" href="https://www.autoslash.com/">AutoSlash 免费盯价</a></td><td>降价即重订</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号 / 车行 / 车型 / 险种"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div><div id="bk-pdx" class="bkwrap"><div class="card" data-id="pdx" data-booked="Booking 5136497847" style="--c:#16a34a">
- <div class="head"><input type="checkbox"><span class="ttl">Portland · Evermore Guesthouse（已订）</span><span class="tag">已订</span><span class="date">9/28 周一 → 9/29 周二 · 1 晚</span></div>
- <div class="why"><b>3860 SE Clinton St, Portland, OR 97202</b> · 电话 +1 503-206-6509<br>入住 <b>15:00 后</b>（自助入住，提前发门禁密码） · 退房 <b>11:00 前</b> · 含自助早餐 · 住客专用免费停车场<br><b>待办：</b>在 Booking 给酒店留言，要一间朝 <b>Clinton St</b> 的房（避开 Cesar Chavez Blvd 主路噪音）；车道入口在主路上，拐进去要慢。</div>
- <table>
-  <tr><th>项目</th><th>链接</th><th>备注</th></tr>
-  <tr><td><b>导航 / 管理</b></td><td>
-   <a class="btn pri" target="_blank" href="https://www.google.com/maps/search/?api=1&query=3860+SE+Clinton+St%2C+Portland%2C+OR+97202">Google 地图</a>
-   <a class="btn" target="_blank" href="https://secure.booking.com/myreservations.html">Booking 订单</a>
-  </td><td>确认号 5136497847，PIN 见邮件</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d3" style="--pc:#16a34a">
- <div class="dh"><span class="dd">9/29</span><span class="dw">周二</span><span class="tg" style="background:#16a34a">波特兰·海岸</span><span class="dt">波特兰 → Astoria</span></div>
- <ul class="it"><li><b>08:30</b><span>Evermore 早餐、退房（11:00 前），行李先放后备箱</span></li><li><b>09:30</b><span>波特兰日本花园（开车约 20min，官网确认开门时间）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Portland%20Japanese%20Garden">🧭</a></li><li><b>12:00</b><span>Powell&#x27;s City of Books（停 SmartPark 停车楼）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Powell%27s%20City%20of%20Books">🧭</a></li><li><b>13:00</b><span>逛 Pearl District + food carts 午餐</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Pearl%20District%2C%20Portland">🧭</a></li><li><b>14:30</b><span>US-30 北上 Astoria（约 1h45m）</span></li><li><b>16:15</b><span>The Inn at 515 15th 自助入住（15:00 后）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=515%2015th%20St%2C%20Astoria%2C%20OR%2097103">🧭</a></li><li><b>19:00</b><span>Astoria Column 日落（164 级旋转梯）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Astoria%20Column">🧭</a></li></ul>
- <div class="st">🛏 The Inn at 515 15th（已订） <a class="pill" href="#bk-ast" data-pill="ast">待订 · Astoria Inn 515</a></div>
- <div id="bk-ast" class="bkwrap"><div class="card" data-id="ast" data-booked="Booking 5933478386" style="--c:#16a34a">
- <div class="head"><input type="checkbox"><span class="ttl">Astoria · The Inn at 515 15th（已订）</span><span class="tag">已订</span><span class="date">9/29 周二 → 9/30 周三 · 1 晚</span></div>
- <div class="why"><b>515 15th St, Astoria, OR 97103</b> · 电话 +1 503-298-6976<br>入住 <b>15:00 后</b>（无前台，密码发邮箱） · 退房 <b>10:30 前</b>（比一般酒店早半小时） · 免费停车<br>无空调、房间内无咖啡（公共厨房有）。要取消只在 Booking 里操作。</div>
- <table>
-  <tr><th>项目</th><th>链接</th><th>备注</th></tr>
-  <tr><td><b>导航 / 管理</b></td><td>
-   <a class="btn pri" target="_blank" href="https://www.google.com/maps/search/?api=1&query=515+15th+St%2C+Astoria%2C+OR+97103">Google 地图</a>
-   <a class="btn" target="_blank" href="https://secure.booking.com/myreservations.html">Booking 订单</a>
-  </td><td>确认号 5933478386，PIN 见邮件</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d4" style="--pc:#16a34a">
- <div class="dh"><span class="dd">9/30</span><span class="dw">周三</span><span class="tg" style="background:#16a34a">波特兰·海岸</span><span class="dt">Astoria → Cannon Beach</span></div>
- <ul class="it"><li><b>10:30</b><span>The Inn at 515 15th 退房（截止 10:30）</span></li><li><b>上午</b><span>Goonies《七宝奇谋》取景地</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Goonies%20House%20Astoria">🧭</a></li><li><b>上午</b><span>哥伦比亚河海事博物馆</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Columbia%20River%20Maritime%20Museum">🧭</a></li><li><b>下午</b><span>US-101 南下 Cannon Beach（40min），入住</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Cannon%20Beach%2C%20OR">🧭</a></li><li><b>傍晚</b><span>Haystack Rock 日落（退潮可走近）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Haystack%20Rock">🧭</a></li></ul>
- <div class="st">🛏 Cannon Beach 酒店 <a class="pill" href="#bk-cb" data-pill="cb">待订 · Cannon Beach</a></div>
- <div id="bk-cb" class="bkwrap"><div class="card" data-id="cb" style="--c:var(--hot)">
- <div class="head"><input type="checkbox"><span class="ttl">Cannon Beach 1 晚</span><span class="tag">急</span><span class="date">9/30 周三 → 10/1 周四</span></div>
- <div class="why">傍晚 Haystack Rock 日落是重点。<b>要日落 + 晨光散步就住 Cannon Beach</b>；最省钱住北边 15 分钟的 Seaside 连锁 motel。</div>
- <table>
-  <tr><th>酒店</th><th>链接</th><th>参考价</th></tr>
-  <tr><td>Tolovana Inn<br><span class="date">带厨房，Haystack 南侧沙滩</span></td><td>
-   <a class="btn" target="_blank" href="https://www.google.com/search?q=Tolovana+Inn+Cannon+Beach+official">官网</a>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Tolovana+Inn+Cannon+Beach&checkin=2026-09-30&checkout=2026-10-01&group_adults=1&no_rooms=1">Booking</a>
-   <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Tolovana+Inn+Cannon+Beach">地图</a>
-  </td><td>$150-220</td></tr>
-  <tr><td><b>Hallmark Resort</b><br><span class="date">海景房正对 Haystack Rock</span></td><td>
-   <a class="btn pri" target="_blank" href="https://www.google.com/search?q=Hallmark+Resort+Cannon+Beach+official">官网</a>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Hallmark+Resort+Cannon+Beach&checkin=2026-09-30&checkout=2026-10-01&group_adults=1&no_rooms=1">Booking</a>
-   <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hallmark+Resort+Cannon+Beach">地图</a>
-  </td><td>$200-300</td></tr>
-  <tr><td>省钱备选 Seaside</td><td><a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Seaside%2C+Oregon&checkin=2026-09-30&checkout=2026-10-01&group_adults=1&no_rooms=1">Booking Seaside</a><a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Cannon+Beach%2C+Oregon&checkin=2026-09-30&checkout=2026-10-01&group_adults=1&no_rooms=1">Cannon Beach 全部</a></td><td>$110-160</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号 / 酒店名"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d5" style="--pc:#16a34a">
- <div class="dh"><span class="dd">10/1</span><span class="dw">周四</span><span class="tg" style="background:#16a34a">波特兰·海岸</span><span class="dt">Ecola SP → 还车 → 回湾区</span></div>
- <ul class="it"><li><b>清晨</b><span>海滩晨光散步</span></li><li><b>上午</b><span>Ecola State Park 眺望太平洋</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Ecola%20State%20Park">🧭</a></li><li><b>13:00</b><span>出发回 PDX（1.5h，途中加满油）</span></li><li><b>14:30</b><span>PDX 机场还车 + 值机</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Portland%20International%20Airport">🧭</a></li><li><b>17:53</b><span>AS1393 PDX→SFO 起飞（已出票）</span></li><li><b>19:54</b><span>落地 SFO，Uber ~50min 回 Sunnyvale</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Sunnyvale%2C%20CA">🧭</a></li></ul>
- <div class="st">🛏 Sunnyvale 酒店 <a class="pill" href="#bk-sv2" data-pill="sv2">待订 · Sunnyvale 第2段</a></div>
- <div id="bk-sv2" class="bkwrap"><div class="card" data-id="sv2" style="--c:var(--hot)">
- <div class="head"><input type="checkbox"><span class="ttl">Sunnyvale 酒店 · 第 2 段</span><span class="tag">高</span><span class="date">10/1 周四 → 10/5 周一 · 4 晚</span></div>
- <div class="why">10/1 约 21:00 才到（落地 SFO 19:54）。10/5 早上骑车去 Carmel，当晚不住这里，<b>所以订到 10/5 退房，省一晚</b>；只带骑行软驮包，<b>大件行李寄存前台</b>到 10/6 晚。同时问清<b>摩托能否停车场</b>（10/5 早取车、10/6 晚还车都在 Sunnyvale）。</div>
- <table>
-  <tr><th>酒店</th><th>链接（已填日期）</th><th>参考价</th></tr>
-  <tr><td>三段合并一家（第 2、3 段同店）</td><td>
-   <a class="btn pri" target="_blank" href="https://www.booking.com/searchresults.html?ss=Residence+Inn+Sunnyvale&checkin=2026-10-01&checkout=2026-10-05&group_adults=1&no_rooms=1">Booking · Residence Inn</a>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Extended+Stay+America+Sunnyvale&checkin=2026-10-01&checkout=2026-10-05&group_adults=1&no_rooms=1">Booking · Extended Stay</a>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Sunnyvale%2C+California&checkin=2026-10-01&checkout=2026-10-05&group_adults=1&no_rooms=1">Booking 全部</a>
-  </td><td>4 晚 · 周五六晚可能略涨</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号 / 酒店名 / 是否同意寄存"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d6" style="--pc:#a855f7">
- <div class="dh"><span class="dd">10/2</span><span class="dw">周五</span><span class="tg" style="background:#a855f7">缓冲</span><span class="dt">缓冲日 · 出差预热</span></div>
- <ul class="it"><li><b>上午</b><span>洗衣、休整、工作邮件</span></li><li><b>下午</b><span>Stanford 校园</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Stanford%20University">🧭</a></li><li><b>下午</b><span>Apple Park 访客中心（免费）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Apple%20Park%20Visitor%20Center">🧭</a></li><li><b>晚</b><span>确认借车保险 + 头盔 + Big Sur 天气</span></li></ul>
- <div class="st">🛏 Sunnyvale 酒店 </div>
- 
-</section>
-<section class="day" id="d7" style="--pc:#0891b2">
- <div class="dh"><span class="dd">10/3</span><span class="dw">周六</span><span class="tg" style="background:#0891b2">湾区</span><span class="dt">Napa 酒乡（朋友自驾）</span></div>
- <ul class="it"><li><b>全天</b><span>Napa 酒乡，收获季尾巴</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Napa%20Valley">🧭</a></li></ul>
- <div class="st">🛏 Sunnyvale 酒店 </div>
- 
-</section>
-<section class="day" id="d8" style="--pc:#0891b2">
- <div class="dh"><span class="dd">10/4</span><span class="dw">周日</span><span class="tg" style="background:#0891b2">湾区</span><span class="dt">轻松家聚</span></div>
- <ul class="it"><li><b>全天</b><span>家聚 / BBQ / 金门公园</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Golden%20Gate%20Park">🧭</a></li><li><b>晚</b><span>早收，为骑行蓄力</span></li></ul>
- <div class="st">🛏 Sunnyvale 酒店 </div>
- 
-</section>
-<section class="day" id="d9" style="--pc:#ea580c">
- <div class="dh"><span class="dd">10/5</span><span class="dw">周一</span><span class="tg" style="background:#ea580c">骑行</span><span class="dt">摩托 D1 · Hwy 1 北段（约 100mi）</span></div>
- <ul class="it"><li><b>09:15</b><span>Sunnyvale 满油出发（Monster 821）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Sunnyvale%2C%20CA">🧭</a></li><li><b>09:45</b><span>Hwy 9 红杉山道 → Santa Cruz</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Saratoga%2C%20CA">🧭</a></li><li><b>11:00</b><span>West Cliff Drive · Steamer Lane + 早午餐</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Steamer%20Lane%20Santa%20Cruz">🧭</a></li><li><b>12:00</b><span>冲浪博物馆（周一 12-16 点，免费）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Santa%20Cruz%20Surfing%20Museum">🧭</a></li><li><b>13:30</b><span>Moss Landing 桥头看海獭</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Moss%20Landing">🧭</a></li><li><b>14:30</b><span>Monterey Cannery Row + 补油</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Cannery%20Row%20Monterey">🧭</a></li><li><b>15:45</b><span>Laguna Seca gift shop（17:00 关门）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=WeatherTech%20Raceway%20Laguna%20Seca">🧭</a></li><li><b>17:15</b><span>Asilomar 日落（约 18:30）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Asilomar%20State%20Beach">🧭</a></li><li><b>19:00</b><span>Carmel / Monterey 入住 + 晚餐</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carmel-by-the-Sea%2C%20CA">🧭</a></li></ul>
- <div class="st">🛏 Carmel / Monterey <a class="pill" href="#bk-cm" data-pill="cm">待订 · Carmel/Monterey</a></div>
- <div id="bk-cm" class="bkwrap"><div class="card" data-id="cm" style="--c:var(--mid)">
- <div class="head"><input type="checkbox"><span class="ttl">Carmel / Monterey 1 晚</span><span class="tag">中</span><span class="date">10/5 周一 → 10/6 周二</span></div>
- <div class="why">骑摩托入住：<b>选一楼 / 门口可停车的 motel</b>。次日 08:00 出发去 Point Lobos，Carmel 近 5 分钟；Monterey 便宜但多 10 分钟。</div>
- <table>
-  <tr><th>酒店</th><th>链接</th><th>参考价</th></tr>
-  <tr><td><b>Monterey Munras Ave motel 带</b></td><td>
-   <a class="btn pri" target="_blank" href="https://www.booking.com/searchresults.html?ss=Monterey%2C+California&checkin=2026-10-05&checkout=2026-10-06&group_adults=1&no_rooms=1">Booking Monterey</a>
-   <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=motel+Munras+Ave+Monterey">地图看 motel</a>
-  </td><td>$130-180</td></tr>
-  <tr><td>Carmel Village Inn</td><td>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Carmel+Village+Inn&checkin=2026-10-05&checkout=2026-10-06&group_adults=1&no_rooms=1">Booking</a>
-   <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carmel+Village+Inn">地图</a>
-  </td><td>$180-260</td></tr>
-  <tr><td>Hofsas House</td><td>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Hofsas+House+Carmel&checkin=2026-10-05&checkout=2026-10-06&group_adults=1&no_rooms=1">Booking</a>
-   <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hofsas+House+Carmel">地图</a>
-  </td><td>$180-260</td></tr>
-  <tr><td>Carmel 全部</td><td><a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Carmel-by-the-Sea%2C+California&checkin=2026-10-05&checkout=2026-10-06&group_adults=1&no_rooms=1">Booking Carmel</a></td><td></td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号 / 酒店名"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d10" style="--pc:#ea580c">
- <div class="dh"><span class="dd">10/6</span><span class="dw">周二</span><span class="tg" style="background:#ea580c">骑行</span><span class="dt">摩托 D2 · Big Sur（约 180mi）</span></div>
- <ul class="it"><li><b>08:00</b><span>Carmel 加满油出发</span></li><li><b>08:10</b><span>Point Lobos（8 点开门，$10）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Point%20Lobos%20State%20Natural%20Reserve">🧭</a></li><li><b>10:10</b><span>Bixby Bridge 桥北观景台</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Bixby%20Creek%20Bridge">🧭</a></li><li><b>10:30</b><span>Hurricane Point</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hurricane%20Point%20Big%20Sur">🧭</a></li><li><b>11:45</b><span>Nepenthe 悬崖早午饭（周二歇业改 Big Sur River Inn）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Nepenthe%20Big%20Sur">🧭</a></li><li><b>13:15</b><span>McWay Falls 观景台，折返</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=McWay%20Falls">🧭</a></li><li><b>15:30</b><span>Hwy 68 → 101 北上</span></li><li><b>18:00</b><span>Sunnyvale 还车 + 取寄存行李入住 + 朋友晚饭</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Sunnyvale%2C%20CA">🧭</a></li></ul>
- <div class="st">🛏 Sunnyvale 酒店 <a class="pill" href="#bk-sv3" data-pill="sv3">待订 · Sunnyvale 第3段</a></div>
- <div id="bk-sv3" class="bkwrap"><div class="card" data-id="sv3" style="--c:var(--mid)">
- <div class="head"><input type="checkbox"><span class="ttl">Sunnyvale 酒店 · 第 3 段</span><span class="tag">中</span><span class="date">10/6 周二 → 10/7 周三 · 1 晚</span></div>
- <div class="why">10/6 约 18:00 骑回 Sunnyvale 还车，取回寄存行李入住；10/7 上午从 SJC 飞 LA，离 SJC 近更好（Sunnyvale 到 SJC 约 15 分钟）。</div>
- <table>
-  <tr><th>酒店</th><th>链接（已填日期）</th><th>参考价</th></tr>
-  <tr><td>与第 1/2 段同一家</td><td>
-   <a class="btn pri" target="_blank" href="https://www.booking.com/searchresults.html?ss=Residence+Inn+Sunnyvale&checkin=2026-10-06&checkout=2026-10-07&group_adults=1&no_rooms=1">Booking · Residence Inn</a>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Sunnyvale%2C+California&checkin=2026-10-06&checkout=2026-10-07&group_adults=1&no_rooms=1">Booking 全部</a>
-  </td><td>1 晚</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="确认号 / 酒店名"><input class="pr" type="number" placeholder="总价 $"></div>
-</div></div>
-</section>
-<section class="day" id="d11" style="--pc:#2563eb">
- <div class="dh"><span class="dd">10/7</span><span class="dw">周三</span><span class="tg" style="background:#2563eb">出差</span><span class="dt">飞 LA · 出差开始</span></div>
- <ul class="it"><li><b>上午</b><span>SJC→LAX 1h20m（待确认订票方）</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=San%20Jose%20International%20Airport">🧭</a></li><li><b>午后</b><span>Uber 到 Culver City 入住</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Culver%20City%2C%20CA">🧭</a></li></ul>
- <div class="st">🛏 Culver City 酒店 <a class="pill" href="#bk-la" data-pill="la">待订 · Culver City</a></div>
- <div id="bk-la" class="bkwrap"><div class="card" data-id="la" style="--c:#6b7280">
- <div class="head"><input type="checkbox"><span class="ttl">Culver City 3 晚</span><span class="tag">待确认</span><span class="date">10/7 周三 → 10/10 周六</span></div>
- <div class="why"><b>先确认公司是否统一订 / 差标上限</b>。10/10 深夜 22:00 才去 LAX，下单前问清<b>能否晚退房或寄存行李</b>（或 10/10 多订半天）。同时确认 10/7 SJC→LAX 机票谁订。</div>
- <table>
-  <tr><th>酒店</th><th>链接</th><th>参考价</th></tr>
-  <tr><td>按公司差标</td><td>
-   <a class="btn" target="_blank" href="https://www.booking.com/searchresults.html?ss=Culver+City%2C+California&checkin=2026-10-07&checkout=2026-10-10&group_adults=1&no_rooms=1">Booking Culver City</a>
-   <a class="btn" target="_blank" href="https://www.google.com/search?q=Culver+Hotel+official">Culver Hotel</a>
-  </td><td>$250-350 (Culver Hotel)</td></tr>
-  <tr><td>SJC→LAX 机票</td><td>
-   <a class="btn" target="_blank" href="https://www.google.com/travel/flights?q=Flights%20from%20SJC%20to%20LAX%20on%202026-10-07%20one%20way">Google Flights 10/7</a>
-  </td><td>$60-120</td></tr>
- </table>
- <div class="rec"><input class="cf" placeholder="公司订 / 确认号"><input class="pr" type="number" placeholder="自付 $（报销填 0）"></div>
-</div></div>
-</section>
-<section class="day" id="d12" style="--pc:#2563eb">
- <div class="dh"><span class="dd">10/8</span><span class="dw">周四</span><span class="tg" style="background:#2563eb">出差</span><span class="dt">Culver City 出差</span></div>
- <ul class="it"><li><b>全天</b><span>出差 Day 2</span></li></ul>
- <div class="st">🛏 Culver City 酒店 </div>
- 
-</section>
-<section class="day" id="d13" style="--pc:#2563eb">
- <div class="dh"><span class="dd">10/9</span><span class="dw">周五</span><span class="tg" style="background:#2563eb">出差</span><span class="dt">Culver City 出差</span></div>
- <ul class="it"><li><b>全天</b><span>出差 Day 3</span></li></ul>
- <div class="st">🛏 Culver City 酒店 </div>
- 
-</section>
-<section class="day" id="d14" style="--pc:#64748b">
- <div class="dh"><span class="dd">10/10</span><span class="dw">周六</span><span class="tg" style="background:#64748b">交通</span><span class="dt">深夜赴 LAX</span></div>
- <ul class="it"><li><b>白天</b><span>休整收尾（确认晚退房 / 寄存行李）</span></li><li><b>22:00</b><span>到 LAX 国际航站楼值机</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=LAX%20Tom%20Bradley%20International%20Terminal">🧭</a></li></ul>
- <div class="st">🛏 （无需住宿） </div>
- 
-</section>
-<section class="day" id="d15" style="--pc:#64748b">
- <div class="dh"><span class="dd">10/11</span><span class="dw">周日</span><span class="tg" style="background:#64748b">交通</span><span class="dt">LAX → 羽田</span></div>
- <ul class="it"><li><b>00:50</b><span>NH105 起飞（已出票），机上过夜 11h</span></li></ul>
- <div class="st">🛏 机上 </div>
- 
-</section>
-<section class="day" id="d16" style="--pc:#dc2626">
- <div class="dh"><span class="dd">10/12</span><span class="dw">周一</span><span class="tg" style="background:#dc2626">回程</span><span class="dt">羽田转机 → 深圳</span></div>
- <ul class="it"><li><b>05:00</b><span>落地羽田 T2，空侧巴士转 T3</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Haneda%20Airport%20Terminal%203">🧭</a></li><li><b>11:10</b><span>NH965 起飞 → 15:10 落地深圳</span><a class="nv" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Shenzhen%20Bao%20an%20International%20Airport">🧭</a></li></ul>
- <div class="st">🛏 到家 🏠 </div>
- 
-</section>
+  <section id="v-trip" class="on">
+    <div class="stats">
+      <span class="chip">全程 <b>17 天</b></span>
+      <span class="chip">航班 <b>6 段</b>（已订 5 · 待确认 1）</span>
+      <span class="chip">骑行 <b>2 天 · ~280mi</b> · 借车 Monster 821 · Carmel <b>1 晚</b></span>
+      <span class="chip">城市 <b>6 个</b></span>
+    </div>
+    <div class="bar" id="legend"></div>
+    <div class="actions">
+      <button class="btn primary" onclick="exportICS()">📅 导出 .ics（手机日历）</button>
+      <button class="btn" onclick="window.print()">🖨 打印</button>
+    </div>
+    <div class="tl" id="timeline"></div>
+  </section>
+  <section id="v-ridemap">
+    <div class="rm-grid">
+      <div id="rmap"></div>
+      <div class="rm-side">
+        <div class="rmtabs" id="rmtabs">
+          <button class="rmtab on" data-rv="all">全部</button>
+          <button class="rmtab" data-rv="d1">D1 · 10/5 北段</button>
+          <button class="rmtab" data-rv="d2">D2 · 10/6 Big Sur</button>
+        </div>
+        <div class="mleg"><b>读图</b>：实线=去程，虚线=回程/折返；橙=D1 北段，红=D2 Big Sur，绿⛽=加油点。路线为示意折线（沿 Hwy 9 / 17 / 1 / 68 / 101），导航以 Google Maps 为准；点地图圆点或右侧条目可互相跳转。</div>
+        <div id="rside"></div>
+        <div class="rtips"><b>⛽ 三站加油</b>：Sunnyvale 满 → Monterey 补 → Carmel 满，覆盖两天全程（Monster 821 油箱 16.5L，续航约 280km）；Big Sur 村内油站少且贵，不依赖。</div>
+        <div class="rtips"><b>⚠️ 出发前确认</b>：Laguna Seca 商店赛后时段 (831) 242-8201；Nepenthe 周二营业 (831) 667-2345（歇业改 Big Sur River Inn）；Caltrans District 5 查 Big Sur 路况。Big Sur 村以南无手机信号，提前下好离线地图。</div>
+        <div class="rtips"><b>🌧 雨天预案</b>：两天整体对调或压缩单日（保 Point Lobos + Bixby）。冲浪博物馆周一限定，对调则放弃，改周二 Monterey 水族馆（室内）。</div>
+      </div>
+    </div>
+  </section>
+  <section id="v-pdxmap">
+    <div class="rm-grid">
+      <div id="pmap"></div>
+      <div class="rm-side">
+        <div class="rmtabs" id="ptabs">
+          <button class="rmtab on" data-pv="all">全部</button>
+          <button class="rmtab" data-pv="d1">D1 · 9/28 峡谷</button>
+          <button class="rmtab" data-pv="d2">D2 · 9/29 市区→Astoria</button>
+          <button class="rmtab" data-pv="d3">D3 · 9/30 Astoria→海岸</button>
+          <button class="rmtab" data-pv="d4">D4 · 10/1 回PDX</button>
+        </div>
+        <div class="mleg"><b>读图</b>：实线=去程，虚线=回程/重复段；蓝=D1 峡谷，绿=D2 市区→Astoria，橙=D3 海岸，紫=D4 回程。路线为示意折线（沿 I-84 / US-30 / US-101 / US-26），导航以 Google Maps 为准。点位均带 <b>🧭 Google 导航</b>：手机点击直接唤起 Google Maps App。四天动线零回头路：机场即峡谷入口，US-26 内陆直线回机场。</div>
+        <div id="pside"></div>
+        <div class="rtips"><b>🌧 雨天 B 计划</b>：D3 海事博物馆全程室内；瀑布步道铺装路小雨照走；Ecola 雨后泥地只去观景台。前一晚查 Cannon Beach tide chart（NOAA），潮池只在低潮前后 1h 可看。</div>
+        <div class="rtips"><b>🍮 吃喝 & 落地须知</b>：Bowpicker 鱼薯 ~18:00 打烊，赶不上改 Buoy Beer 河景；Blue Star Doughnut 公认优于 Voodoo；俄勒冈禁止自助加油（全程有人服务）；PDX 还车前机场外围加油更便宜。</div>
+      </div>
+    </div>
+  </section>
+  <section id="v-flights"><div class="fgrid" id="fgrid"></div></section>
+  <section id="v-pack">
+    <div class="ptext" id="ptext"></div>
+    <div class="pbar"><i id="pbar"></i></div>
+    <div class="actions"><button class="btn" onclick="resetPack()">重置勾选</button></div>
+    <div id="pack"></div>
+  </section>
+  <section id="v-todo">
+    <div id="todo"></div>
+    <div class="daycard" style="margin-top:14px">
+      <h2><i style="background:#dc2626"></i>🚗 PDX 租车比价</h2>
+      <div class="dsum">9/28 10:30 取 · 10/1 14:30 还（4 整天，匹配 AS1411 10:09 落地 / AS1393 17:53 起飞）· 行情参考 $250-350 全包</div>
+      <div style="font-size:13px;line-height:2.1">
+        <b>🇨🇳 中文渠道</b><br>
+        · <a href="https://www.zuzuche.com/" target="_blank">租租车 zuzuche.com</a> —— 和国际驾照翻译认证件同源，件和订单一处管理<br>
+        · <a href="https://us.trip.com/carhire/to-united-states-66/portland-25858/portland-international-airport-pdx/" target="_blank">Trip.com 国际租车 · PDX 页</a> —— 报价含基础险，比价时注意口径对齐<br>
+        <b>🔍 比价 & 盯价</b><br>
+        · <a href="https://www.kayak.com/car-rentals" target="_blank">Kayak 租车比价</a> —— 一屏比完全部车行，先看行情底线<br>
+        · <a href="https://www.autoslash.com/" target="_blank">AutoSlash</a> —— 免费盯价，降价自动提醒重订（4 天窗口内大概率捡到一次降价）<br>
+        · <a href="https://www.priceline.com/drive/" target="_blank">Priceline</a> —— Express Deals 灵活牌常有低价<br>
+        <b>🏷 直订折扣</b><br>
+        · <a href="https://www.budget.com/" target="_blank">Budget 官网</a> —— 下单时 Offer Codes 填 BCD 码 <b>A740300</b>（公开码，基础价约 -25%）<br>
+        · <a href="https://www.costcotravel.com/" target="_blank">Costco Travel</a> —— 会员价常为最低档 + 免副驾费（可让湾区朋友代订）<br>
+      </div>
+      <div style="font-size:12.5px;color:#374151;margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)">
+        <b>策略</b>：先下免费取消单锁库存 → AutoSlash 盯价 → 降价就重订。<br>
+        <b>PDX 落地</b>：俄勒冈禁止自助加油（全程有人服务）；本地无 toll，柜台 toll pass 直接拒；押金 $200-400 信用卡预授权；取还车全车拍照（Budget 有 AI 划痕扫描仪）。
+      </div>
+    </div>
+  </section>
 </main>
-<footer>us-trip-2026 · 行程 + 预订 · 生成于 2026-09-25</footer>
+<footer>us-trip-2026 · 更新于 2026-09-20（波特兰地图整合进总览 · 全点位 Google 导航 · 骑行 D1/D2 定稿）· 数据以已出票信息为准</footer>
+<script src="leaflet.js"></script>
 <script>
-(function(){
- var KEY='us-trip-booking-v1',s={};
- try{s=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
- var cards=[].slice.call(document.querySelectorAll('.card[data-id]'));
- function save(){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
- function kpi(){
-  var d=0,sum=0;
-  cards.forEach(function(c){
-   var id=c.dataset.id,v=s[id]||{};
-   if(v.ck)d++; sum+=parseFloat(v.pr)||0;
-   c.classList.toggle('done',!!v.ck);
+const PH = {
+  bay:{n:'湾区',c:'var(--bay)'}, pdx:{n:'波特兰·海岸',c:'var(--pdx)'},
+  buf:{n:'缓冲',c:'var(--buf)'}, ride:{n:'骑行',c:'var(--ride)'},
+  work:{n:'出差',c:'var(--work)'}, fly:{n:'交通',c:'var(--fly)'}, home:{n:'回程',c:'var(--home)'}
+};
+const WD = ['日','一','二','三','四','五','六'];
+const DAYS = [
+ {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['22:30','UA878 起飞（已出票）'],['20:10','落地 SFO（夏令时差 15h，同日到达）'],['21:30','出关取行李，Uber/Lyft ~40min → Mountain View'],['深夜','Airbnb 自助入住（469 Sierra Vista Ave A，房东 Gang），倒时差']],stay:'Mountain View Airbnb（已订）',mv:'Uber $35-50'},
+ {d:'2026-09-27',ph:'bay',t:'南湾叙旧',loc:'Sunnyvale / 南湾',items:[['上午','自然醒，倒时差'],['中午','湾区朋友叙旧饭局']],stay:'Mountain View Airbnb（已订）'},
+ {d:'2026-09-28',ph:'pdx',t:'飞波特兰 · 哥伦比亚河峡谷',loc:'SFO ✈ PDX → Columbia Gorge',items:[['06:30','Airbnb 退房，Uber 赴 SFO（周一早高峰预留 1h）'],['08:23','AS1411 SFO→PDX 起飞（已出票）'],['10:09','落地 PDX，机场取车'],['中午','I-84 东进 Columbia River Gorge（45min）'],['下午','Latourell Falls → Multnomah Falls → Hood River'],['晚','Evermore Guesthouse 自助入住（3860 SE Clinton St，15:00 后），SE Division St 晚饭']],stay:'Evermore Guesthouse（已订）',mv:'租车 Day 1'},
+ {d:'2026-09-29',ph:'pdx',t:'波特兰 → Astoria',loc:'US-30 北上 1h45m',items:[['上午','日本花园 / Powell\'s 书店'],['中午','food pods 午餐'],['下午','驱车北上 Astoria'],['傍晚','Astoria Column 看日落（154 级旋转楼梯）']],stay:'The Inn at 515 15th（已订）',mv:'租车 Day 2'},
+ {d:'2026-09-30',ph:'pdx',t:'Astoria → Cannon Beach',loc:'US-101 南下 40min',items:[['上午','Goondocks《七宝奇谋》取景地 + 海事博物馆 + 哥伦比亚河口'],['下午','南下到 Cannon Beach'],['傍晚','Haystack Rock 日落（退潮时可走近）']],stay:'Cannon Beach 酒店',mv:'租车 Day 3'},
+ {d:'2026-10-01',ph:'pdx',t:'Ecola SP → 还车 → 回湾区',loc:'Cannon Beach → PDX ✈ SFO',items:[['清晨','海滩晨光散步'],['上午','Ecola State Park 眺望太平洋'],['13:00','出发回 PDX（1.5h，途中加油）'],['14:45','机场还车 + 值机 AS1393'],['17:53','AS1393 PDX→SFO 起飞（已出票）'],['19:54','落地 SFO，Uber ~50min 回 Sunnyvale']],stay:'Sunnyvale 酒店',mv:'还车 + 航班'},
+ {d:'2026-10-02',ph:'buf',t:'缓冲日 · 出差预热',loc:'Sunnyvale',items:[['上午','洗衣、休整、工作邮件、出差材料'],['下午','轻量选项：Stanford 校园 / Apple Park 访客中心（免费）'],['晚间','确认借车细节（保险 permissive use + 头盔）+ Big Sur 天气']],stay:'Sunnyvale 酒店'},
+ {d:'2026-10-03',ph:'bay',t:'周末 2 · 朋友自驾',loc:'Napa 酒乡（首选）',items:[['全天','Napa 酒乡（10 月收获季尾巴）'],['备选','Monterey / Carmel 17-Mile Drive（摩托 D1/D2 已覆盖同区域）']],stay:'Sunnyvale 酒店',mv:'朋友自驾'},
+ {d:'2026-10-04',ph:'bay',t:'周末 2 · 轻松家聚',loc:'南湾',items:[['全天','家聚 / BBQ / 金门公园'],['晚','早收，为骑行日蓄力']],stay:'Sunnyvale 酒店'},
+ {d:'2026-10-05',ph:'ride',t:'摩托 D1 · Hwy 1 北段',loc:'Sunnyvale → Hwy 9 → Santa Cruz → Carmel',items:[['09:15','Sunnyvale 满油出发（借车 Monster 821）'],['09:45','Hwy 9 红杉山道热身 → Santa Cruz'],['11:00','West Cliff Drive 看 Steamer Lane 冲浪 + 早午餐'],['12:00','冲浪博物馆开门即入（周一 12-16 点，免费）'],['13:30','Hwy 1 南下 → Moss Landing 桥头看海獭'],['14:30','Monterey Cannery Row 快逛 + 咖啡（顺路补油）'],['15:45','Laguna Seca gift shop（17:00 关门，勿拖）'],['17:15','Pacific Grove / Asilomar 日落（约 18:30）'],['19:00','Carmel 入住 + 晚餐（全天约 100mi）']],stay:'Carmel / Monterey 酒店',mv:'摩托 · 借 Ducati Monster 821'},
+ {d:'2026-10-06',ph:'ride',t:'摩托 D2 · Big Sur 主菜',loc:'Point Lobos → Bixby → McWay 折返',items:[['08:00','Carmel 加满油出发（晨雾期先排 Point Lobos）'],['08:10','Point Lobos 州立保护区（8 点开门 $10，海獭活跃）'],['10:10','Bixby Bridge 桥北观景台（雾散后拍照）'],['10:30','Hurricane Point 顺路停留'],['11:45','Nepenthe 悬崖露台早午饭（周二歇业则 Big Sur River Inn）'],['13:15','McWay Falls 路边观景台，到此折返'],['15:30','回 Carmel → Hwy 68 → 101 北上（省 40min）'],['18:00','Sunnyvale 还车 + 朋友晚饭（全天约 180mi）']],stay:'Sunnyvale 酒店',mv:'摩托还车'},
+ {d:'2026-10-07',ph:'work',t:'飞 LA · 出差开始',loc:'SJC ✈ LAX → Culver City',items:[['上午','SJC→LAX 直飞 1h20m（待确认订票方）'],['午后','Uber 到 Culver City 入住'],['着装','商务休闲：Polo/衬衫 + 干净裤子']],stay:'Culver City 酒店'},
+ {d:'2026-10-08',ph:'work',t:'Culver City 出差',loc:'Culver City, LA',items:[['全天','出差 Day 2']],stay:'Culver City 酒店'},
+ {d:'2026-10-09',ph:'work',t:'Culver City 出差',loc:'Culver City, LA',items:[['全天','出差 Day 3（行程至 10/9）']],stay:'Culver City 酒店'},
+ {d:'2026-10-10',ph:'fly',t:'深夜赴 LAX 值机',loc:'Culver City → LAX',items:[['白天','休整 / 收尾'],['22:00','赴 LAX 国际航站楼（NH105 00:50 起飞，提前 3h）']],stay:'机场'},
+ {d:'2026-10-11',ph:'fly',t:'LAX → 羽田',loc:'LAX ✈ HND',items:[['00:50','NH105 起飞（已出票，ANA 787）'],['全程','机上过夜，约 11h']],stay:'机上'},
+ {d:'2026-10-12',ph:'home',t:'羽田转机 → 深圳',loc:'HND T2→T3 ✈ SZX',items:[['05:00','落地羽田 T2'],['上午','空侧转机巴士 T2→T3（同日转机免签，行李直挂）'],['11:10','NH965 起飞 → 15:10 落地深圳']],stay:'到家 🏠'}
+];
+const FLIGHTS = [
+ {rt:'HKG → SFO',dt:'9/26 周六',dep:'22:30',arr:'20:10 当日',no:'UA878 美联航 · 787',st:'booked',note:'已出票。飞行约 12.5h，落地后 BART 末班车约 23:00 赶得上但偏紧，行李多直接 Uber $35-50。'},
+ {rt:'SFO → PDX',dt:'9/28 周一',dep:'08:23',arr:'10:09',no:'AS1411 阿拉斯加 · 经济舱',st:'booked',note:'已出票（0 托运 · 2 随身）。Sunnyvale → SFO 周一早高峰预留 1h+，06:30 前上车；提前 24h 在 Alaska App 值机选座。'},
+ {rt:'PDX → SFO',dt:'10/1 周四',dep:'17:53',arr:'19:54',no:'AS1393 阿拉斯加 · 经济舱',st:'booked',note:'已出票（0 托运 · 2 随身）。行李仅 Little America 背包，还车后无托运负担；落地 SFO 后 Uber ~50min 回 Sunnyvale。'},
+ {rt:'SJC → LAX',dt:'10/7 周三',dep:'待定',arr:'待定',no:'待确认',st:'confirm',note:'出差段，先确认公司是否订票；自订的话 Southwest / Alaska 均有直飞 1h20m，$60-120 区间。'},
+ {rt:'LAX → HND',dt:'10/11 周日',dep:'00:50',arr:'05:00 +1',no:'NH105 全日空 · 787',st:'booked',note:'已出票（经济 V 舱联程）。10/10 深夜 22:00 前到 LAX 国际航站楼值机。'},
+ {rt:'HND → SZX',dt:'10/12 周一',dep:'11:10',arr:'15:10',no:'NH965 全日空 · T3',st:'booked',note:'已出票。羽田 T2→T3 空侧转机巴士，同日转机免日本签证、行李直挂深圳。'}
+];
+const PACK = [
+ {cat:'衣物（迪卡侬为主）',items:['冲锋衣 ×1（骑行 / 波特兰小雨 / 湾区海雾三用）','抓绒中间层 ×1','轻羽绒 ×1','速干长袖 ×2','短袖 ×2-3（南湾午后 + LA）','牛仔/工装裤 ×2（1 条给骑行）','速干长裤 ×1','内衣袜子若干 + 厚袜 ×2（骑行）','高帮工装靴（骑行 + 日常通吃）','防水徒步鞋（波特兰 / Cannon Beach）','毛线帽 / 棒球帽','脖套（骑行挡风 + 日常围脖两用）']},
+ {cat:'骑行装备',items:['全指手套','Wraparound 墨镜','折叠软驮包','头盔：朋友备用盔优先，无则湾区 Cycle Gear 买 DOT 全盔（$80-150）','出发前晚看天气：雨则 10/5-6 两天对调或压缩单日']},
+ {cat:'证件财务',items:['护照 + B1/B2 签证','EVUS 确认页（PDF 存手机 + 打印夹护照）','C1D 驾照原件','翻译小白本（核对 D 译成 motorcycle）','信用卡 ×2（额度 ≥$3000）','现金 $100-200','会议/行程证明（入境口径：旅游 + 商务混合，如实陈述）']},
+ {cat:'电子设备',items:['GaN 多口充电器（中国两脚扁插兼容美标插座）','10000mAh 充电宝','GoPro + 车把支架','手机 + eSIM（9/26 落地即激活）','USB-C 线材若干','耳机']},
+ {cat:'洗漱杂项',items:['牙刷牙膏（美国酒店不提供）','拖鞋','SPF50 防晒 + 润唇膏','感冒 / 肠胃 / 过敏药 + 创可贴','折叠伞','密封袋（装湿衣物）']},
+ {cat:'出差物品',items:['笔记本电脑 + 充电器','工作材料','休闲出差装：Polo / 衬衫 + 干净裤子']}
+];
+const TODOS = [
+ {p:'done',x:'9/26 UA878 HKG→SFO 机票（已出票）'},
+ {p:'done',x:'回程联程票 NH105 + NH965（已出票，10/11 LAX → 10/12 深圳）'},
+ {p:'done',x:'EVUS 登记（9/19 Enrolled，2 年有效；下载 PDF + 打印夹护照）'},
+ {p:'done',x:'SFO⇄PDX 机票（9/28 AS1411 08:23 / 10/1 AS1393 17:53，已出票 · 0 托运 2 随身）'},
+ {p:'warn',x:'核对翻译小白本：D 必须译成 motorcycle 类别'},
+ {p:'hot',x:'PDX 机场租车 9/28-10/1（翻译件即可租普通轿车 · 比价链接见下方「PDX 租车比价」卡片）'},
+ {p:'hot',x:'Sunnyvale 酒店：10/1-10/5 + 10/6-10/7（9/26-28 已订 Mountain View Airbnb；问房东能否寄存大件行李至 10/1）'},
+ {p:'mid',x:'借车 Monster 821 收尾：电话确认保险覆盖（permissive use / 临时加为 covered rider）+ 备用头盔，无盔则 Cycle Gear 买 DOT 全盔'},
+ {p:'mid',x:'Carmel / Monterey 10/5 一晚住宿（周中淡季，选可免费取消房型）'},
+ {p:'mid',x:'出发前电话确认：Laguna Seca 商店 (831) 242-8201 · Nepenthe 周二营业 (831) 667-2345 · Caltrans Big Sur 路况'},
+ {p:'mid',x:'eSIM 购买（出发前买好，落地即用；Big Sur 村以南无信号，提前下离线地图）'},
+ {p:'mid',x:'迪卡侬采购：冲锋衣 / 抓绒 / 手套 / 软驮包等'},
+ {p:'mid',x:'SJC→LAX 10/7 机票确认（公司订 or 自订）'}
+];
+/* ---- render ---- */
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+document.getElementById('legend').innerHTML = Object.values(PH).map(p=>`<span class="lg"><i style="background:${p.c}"></i>${p.n}</span>`).join('');
+DAYS.forEach((d,i)=>{
+  const dt = new Date(d.d+'T12:00:00');
+  const md = `${dt.getMonth()+1}/${dt.getDate()}`;
+  const ph = PH[d.ph];
+  const items = d.items.map(it=>`<li><b>${it[0]}</b>${esc(it[1])}</li>`).join('');
+  const foot = [d.stay?`🛏 ${d.stay}`:'',d.mv?`🚗 ${d.mv}`:''].filter(Boolean).join(' · ');
+  document.getElementById('timeline').insertAdjacentHTML('beforeend',`
+  <div class="day">
+    <div class="rail"><div class="dt">${md}</div><div class="dw">周${WD[dt.getDay()]}</div><div class="dot" style="background:${ph.c}"></div><div class="ln"></div></div>
+    <div class="card" style="--pc:${ph.c}">
+      <div class="c-head"><span class="badge">D${i}</span><span class="badge" style="background:${ph.c}">${ph.n}</span><span class="loc">📍 ${d.loc}</span></div>
+      <div class="c-title">${d.t}</div>
+      <ul class="items">${items}</ul>
+      ${foot?`<div class="c-foot">${foot}</div>`:''}
+    </div>
+  </div>`);
+});
+document.getElementById('fgrid').innerHTML = FLIGHTS.map(f=>{
+  const st = {booked:'✅ 已出票',todo:'🔴 待订',confirm:'🟡 待确认'}[f.st];
+  return `<div class="fcard"><div class="f-top"><div><div class="f-date">${f.dt}</div><div class="f-no">${f.no}</div></div><span class="st ${f.st}">${st}</span></div>
+  <div class="f-route">${f.rt}</div><div class="f-times"><div>出发<b>${f.dep}</b></div><div>到达<b>${f.arr}</b></div></div><div class="f-note">${f.note}</div></div>`;
+}).join('');
+const PCOL = {done:'var(--ok)',hot:'var(--hot)',warn:'var(--warn)',mid:'#d97706'};
+const PTAG = {done:'已完成',hot:'紧急',warn:'注意',mid:'待办'};
+document.getElementById('todo').innerHTML = TODOS.map(t=>`<div class="tcard" style="--tc:${PCOL[t.p]}"><span class="tag">${PTAG[t.p]}</span>${t.x}</div>`).join('');
+/* ---- packing checklist ---- */
+const KEY = 'us-trip-pack-v1';
+let saved = {};
+try{ saved = JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){}
+function renderPack(){
+  let total=0, done=0;
+  document.getElementById('pack').innerHTML = PACK.map((c,ci)=>{
+    const lis = c.items.map((it,ii)=>{
+      const id = ci+'-'+ii; total++;
+      const ck = !!saved[id]; if(ck) done++;
+      return `<label class="pitem ${ck?'done':''}"><input type="checkbox" data-id="${id}" ${ck?'checked':''}><span>${esc(it)}</span></label>`;
+    }).join('');
+    return `<div class="pcat"><h3>${c.cat} <span style="color:var(--sub);font-weight:400;font-size:12px">${c.items.length} 项</span></h3>${lis}</div>`;
+  }).join('');
+  const pct = total? Math.round(done/total*100):0;
+  document.getElementById('pbar').style.width = pct+'%';
+  document.getElementById('ptext').textContent = `已打包 ${done} / ${total} 项（${pct}%，勾选状态自动保存在本机浏览器）`;
+  document.querySelectorAll('#pack input').forEach(inp=>inp.addEventListener('change',e=>{
+    saved[e.target.dataset.id] = e.target.checked;
+    localStorage.setItem(KEY, JSON.stringify(saved));
+    renderPack();
+  }));
+}
+function resetPack(){ if(confirm('清空所有勾选？')){ saved={}; localStorage.removeItem(KEY); renderPack(); } }
+renderPack();
+/* ---- ride map 10/5-6 Hwy1 ---- */
+const RDAYS=[
+{ id:'d1',name:'D1 · 10/5 周一 · 北段',color:'#ea580c',
+ sum:'Sunnyvale 09:15 满油出发 → Hwy 9 红杉山道热身 → Santa Cruz（West Cliff + 冲浪博物馆 12 点开门）→ Hwy 1 南下 Moss Landing 海獭 → Monterey → Laguna Seca 商店 → Pacific Grove 日落 → Carmel 住。约 100mi。',
+ route:[[37.3717,-122.0376],[37.2633,-122.0230],[37.2200,-122.0550],[37.1800,-122.1000],[37.1400,-122.1250],[37.0900,-122.1100],[37.0515,-122.0753],[37.0300,-122.0500],[36.9741,-122.0308],[36.9550,-122.0290],[36.9400,-122.0000],[36.9050,-121.8400],[36.8900,-121.7800],[36.8066,-121.7867],[36.7686,-121.7566],[36.6822,-121.8022],[36.6178,-121.8517],[36.6003,-121.8947],[36.5900,-121.8700],[36.5840,-121.8000],[36.5847,-121.7528],[36.5800,-121.8000],[36.5900,-121.8700],[36.6003,-121.8947],[36.6100,-121.9100],[36.6178,-121.9175],[36.6224,-121.9367],[36.6100,-121.9300],[36.5900,-121.9400],[36.5700,-121.9400],[36.5545,-121.9233]],
+ back:null,
+ spots:[
+  {ll:[37.3717,-122.0376],t:'Sunnyvale 出发',time:'09:15 · 满油出发',why:'逆向通勤车流无压力；三站加油第一站（Sunnyvale 满 → Monterey 补 → Carmel 满）。'},
+  {ll:[37.1800,-122.1000],t:'Hwy 9 红杉山道',time:'09:45-11:00 · 热身',why:'Saratoga 进红木林弯道下到 Santa Cruz。借来的车先在这条路找回手感，再上海崖路更稳。'},
+  {ll:[36.9550,-122.0290],t:'West Cliff · Steamer Lane',time:'11:00-12:00 · 看冲浪+早午餐',why:'世界级浪点就在悬崖步道下，正好消磨到博物馆 12 点开门。'},
+  {ll:[36.9515,-122.0265],t:'Santa Cruz 冲浪博物馆',time:'12:00-12:45 · 免费（捐赠制）',why:'周一 12:00-16:00 开门、周二周三闭馆——本行程硬约束；灯塔内 40 分钟逛完，gift shop 冲浪书出名。'},
+  {ll:[36.8066,-121.7867],t:'Moss Landing 海獭',time:'~13:30 · 停 15-30min',why:'Elkhorn Slough 桥头看野生海獭，全美最稳观测点之一。'},
+  {ll:[36.6155,-121.9017],t:'Monterey · Cannery Row',time:'14:30-15:30 · 快逛+咖啡',why:'斯坦贝克《罐头厂街》原型街区；顺路补油点（Del Monte Ave 沿线油站多）。'},
+  {ll:[36.5847,-121.7528],t:'Laguna Seca gift shop',time:'15:45-16:30 · 17:00 关门',why:'Hwy 68 顺路 20 分钟。10/2-4 刚办完 Racing America 赛事（Trans Am+老爷车），正是扫周边时机；先电话确认 (831) 242-8201。'},
+  {ll:[36.6224,-121.9367],t:'Pacific Grove / Asilomar 日落',time:'17:15-18:45 · 日落约 18:30',why:'Asilomar 木板道走 15 分钟，晚霞配海浪收尾。'},
+  {ll:[36.5545,-121.9233],t:'Carmel 入住',time:'19:00 · 晚餐',why:'周一夜价不高；Monterey/PG motel $150-200 档更实惠，Carmel 客栈贵但可步行。'}
+ ]},
+{ id:'d2',name:'D2 · 10/6 周二 · Big Sur',color:'#b91c1c',
+ sum:'Carmel 08:00 出发 → Point Lobos 抢 8 点开门 → Bixby Bridge（10 点后雾散）→ Hurricane Point → Nepenthe 悬崖早午饭 → McWay Falls 折返 → Hwy 68 + 101 北上 → 18:00 Sunnyvale 还车。约 180mi。',
+ route:[[36.5545,-121.9233],[36.5300,-121.9400],[36.5222,-121.9560],[36.4800,-121.9300],[36.4300,-121.9050],[36.3900,-121.8950],[36.3739,-121.9069],[36.3714,-121.9016],[36.3597,-121.9097],[36.3300,-121.9050],[36.3060,-121.9010],[36.2950,-121.8750],[36.2755,-121.8466],[36.2650,-121.8400],[36.2540,-121.8300],[36.2470,-121.8230],[36.2403,-121.8156]],
+ back:[[36.2403,-121.8156],[36.2470,-121.8230],[36.2540,-121.8300],[36.2650,-121.8400],[36.2755,-121.8466],[36.2950,-121.8750],[36.3060,-121.9010],[36.3300,-121.9050],[36.3597,-121.9097],[36.3714,-121.9016],[36.3739,-121.9069],[36.3900,-121.8950],[36.4300,-121.9050],[36.4800,-121.9300],[36.5222,-121.9560],[36.5545,-121.9233],[36.5800,-121.8700],[36.5847,-121.7528],[36.6200,-121.7100],[36.6777,-121.6555],[36.8500,-121.6500],[37.0055,-121.5686],[37.1305,-121.6544],[37.2500,-121.8000],[37.3382,-121.8863],[37.3717,-122.0376]],
+ spots:[
+  {ll:[36.5545,-121.9233],t:'Carmel 出发',time:'08:00 · 加满油',why:'晨雾期先排 Point Lobos（室外），让 Bixby 排到 10 点后雾散——顺序是设计过的。'},
+  {ll:[36.5222,-121.9560],t:'Point Lobos 州立保护区',time:'08:10-09:40 · $10/车',why:'8 点开门抢车位（车位极少）；清晨海獭活跃；号称加州海岸第一，值得 90 分钟。'},
+  {ll:[36.3739,-121.9069],t:'Bixby Bridge',time:'10:10 · 桥北观景台',why:'Big Sur 名片机位：1932 拱桥 + 悬谷；到此海雾基本散尽。'},
+  {ll:[36.3597,-121.9097],t:'Hurricane Point',time:'10:30 · 顺路 5min',why:'Bixby 南侧制高点，回望整段海岸线。'},
+  {ll:[36.2540,-121.8300],t:'Nepenthe 早午饭',time:'11:45-12:45 · 悬崖露台',why:'800ft 悬崖露台看海，Ambrosia 汉堡；周二营业需电话确认 (831) 667-2345，歇业改 Big Sur River Inn。'},
+  {ll:[36.2403,-121.8156],t:'McWay Falls 观景台',time:'13:15-13:45 · 路边 pullout',why:'加州唯一入海瀑布，观景台就在 Hwy 1 路边不进公园；到此折返。'},
+  {ll:[36.5847,-121.7528],t:'Hwy 68 → 101 回程',time:'15:45-17:30 · 不重走 Hwy 1',why:'回程走 68 过 Laguna Seca 转 101 北上，比重走 Hwy 1 省 40 分钟，还车时间可控。'},
+  {ll:[37.3717,-122.0376],t:'Sunnyvale 还车',time:'~18:00 · 交车+晚饭',why:'正好和朋友吃晚饭把车还了；两天全程 ~280mi。'}
+ ]}
+];
+const RFUEL=[
+ {ll:[37.3750,-122.0450],t:'⛽ Sunnyvale · 出发满油',time:'D1 09:00 前'},
+ {ll:[36.6065,-121.8950],t:'⛽ Monterey · 午后补油',time:'D1 ~14:15 · Del Monte Ave 沿线'},
+ {ll:[36.5570,-121.9185],t:'⛽ Carmel · 晚上加满',time:'D1 晚 / D2 早 · 覆盖 D2 全程'}
+];
+let rmap=null,rlayers={},rmarkerById={},rmapInit=false,rBase='amap';
+function initRideMap(){
+  if(rmapInit)return;
+  if(typeof L==='undefined'){document.getElementById('rmap').innerHTML='<div style="padding:24px;font-size:13px;color:#6b7280">地图库（unpkg CDN）当前网络不可达：切手机流量或其他网络后刷新即可，右侧行程清单不受影响。</div>';return;}
+  rmapInit=true;
+  rmap=L.map('rmap',{scrollWheelZoom:true}).setView([36.8,-121.9],8);
+  const amapL=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:['1','2','3','4'],attribution:'&copy; 高德地图'});
+  const osmL=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'});
+  amapL.addTo(rmap);
+  const sw=L.control({position:'topright'});
+  sw.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===rBase)return;rmap.removeLayer(rBase==='amap'?amapL:osmL);(b.dataset.b==='amap'?amapL:osmL).addTo(rmap);rBase=b.dataset.b;d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});return d;};
+  sw.addTo(rmap);
+  RDAYS.forEach(d=>{
+    const g=L.layerGroup();
+    if(d.back){L.polyline(d.back,{color:d.color,weight:3,opacity:.45,dashArray:'8,8'}).addTo(g);}
+    L.polyline(d.route,{color:d.color,weight:4,opacity:.85}).addTo(g);
+    d.spots.forEach((s,i)=>{
+      const ic=L.divIcon({className:'',iconSize:[24,24],iconAnchor:[12,12],html:`<div style="width:24px;height:24px;border-radius:50%;background:${d.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">${i+1}</div>`});
+      const mk=L.marker(s.ll,{icon:ic}).addTo(g);
+      mk.bindPopup(`<div class="pop-t">${s.t}</div><span class="pop-c" style="background:${d.color}">${d.name.split('·')[0].trim()}</span><div class="pop-time">⏱ ${s.time}</div><div class="pop-note">${s.why}</div><a class="pop-nav" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.ll[0]},${s.ll[1]}&travelmode=driving">🧭 Google 导航</a>`);
+      mk.on('click',()=>rHl(d.id,i,false));
+      rmarkerById[d.id+'-'+i]=mk;
+    });
+    rlayers[d.id]=g;
   });
-  document.getElementById('k-done').textContent=d+' / '+cards.length;
-  document.getElementById('k-sum').textContent='$'+sum.toLocaleString();
- }
- cards.forEach(function(c){
-  var id=c.dataset.id,v=s[id]=s[id]||{};
-  if(c.dataset.booked&&v.ck===undefined){v.ck=true;if(!v.cf)v.cf=c.dataset.booked;}
- var ck=c.querySelector('input[type=checkbox]'),cf=c.querySelector('.cf'),pr=c.querySelector('.pr');
-  ck.checked=!!v.ck; if(cf)cf.value=v.cf||''; if(pr)pr.value=v.pr||'';
-  ck.addEventListener('change',function(){v.ck=ck.checked;save();kpi()});
-  if(cf)cf.addEventListener('input',function(){v.cf=cf.value;save()});
-  if(pr)pr.addEventListener('input',function(){v.pr=pr.value;save();kpi()});
- });
- save();kpi();
-})();
-
-(function(){var s={};try{s=JSON.parse(localStorage.getItem('us-trip-booking-v1')||'{}')}catch(e){}
-function upd(){try{s=JSON.parse(localStorage.getItem('us-trip-booking-v1')||'{}')}catch(e){}
-document.querySelectorAll('[data-pill]').forEach(function(p){var v=s[p.dataset.pill]||{};var n=p.textContent.split(' · ')[1];
-p.classList.toggle('ok',!!v.ck);p.textContent=(v.ck?'已订 · ':'待订 · ')+n;});}
-document.addEventListener('change',upd);upd();})();
-</script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}</script></body></html>
+  RFUEL.forEach(f=>{
+    const ic=L.divIcon({className:'',iconSize:[22,22],iconAnchor:[11,11],html:'<div style="width:22px;height:22px;border-radius:50%;background:#16a34a;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">⛽</div>'});
+    L.marker(f.ll,{icon:ic}).addTo(rmap).bindPopup(`<div class="pop-t">${f.t}</div><div class="pop-time">⏱ ${f.time}</div>`);
+  });
+  rShow('all');rRenderSide('all');
+  document.getElementById('rmtabs').addEventListener('click',e=>{
+    const b=e.target.closest('.rmtab');if(!b)return;
+    document.querySelectorAll('#rmtabs .rmtab').forEach(t=>t.classList.toggle('on',t===b));
+    rShow(b.dataset.rv);rRenderSide(b.dataset.rv);
+  });
+}
+function rShow(v){
+  Object.values(rlayers).forEach(g=>rmap.removeLayer(g));
+  if(v==='all'){Object.values(rlayers).forEach(g=>g.addTo(rmap));rmap.fitBounds([[36.18,-122.12],[37.45,-121.50]],{padding:[30,30]});}
+  else{const d=RDAYS.find(x=>x.id===v);rlayers[v].addTo(rmap);const pts=d.back?[...d.route,...d.back]:d.route;rmap.fitBounds(L.latLngBounds(pts).pad(.25));}
+}
+function rHl(dayId,idx,fly){
+  document.querySelectorAll('.rspot').forEach(el=>el.style.background='');
+  const el=document.getElementById('rsp-'+dayId+'-'+idx);
+  if(el){el.style.background='#eef2f7';el.scrollIntoView({block:'nearest',behavior:'smooth'});}
+  if(fly){rmap.flyTo(RDAYS.find(d=>d.id===dayId).spots[idx].ll,13,{duration:.8});setTimeout(()=>rmarkerById[dayId+'-'+idx].openPopup(),850);}
+}
+function rRenderSide(v){
+  document.getElementById('rside').innerHTML=RDAYS.filter(d=>v==='all'||d.id===v).map(d=>`
+   <div class="daycard">
+     <h2><i style="background:${d.color}"></i>${d.name}</h2>
+     <div class="dsum">${d.sum}</div>
+     ${d.spots.map((s,i)=>`
+       <div class="rspot" id="rsp-${d.id}-${i}" onclick="rHl('${d.id}',${i},true)">
+         <div class="n" style="background:${d.color}">${i+1}</div>
+         <div class="st"><b>${s.t}</b><span>⏱ ${s.time}</span><div class="why">${s.why}</div><a class="nav-link" target="_blank" rel="noopener" onclick="event.stopPropagation()" href="https://www.google.com/maps/dir/?api=1&destination=${s.ll[0]},${s.ll[1]}&travelmode=driving">🧭 Google 导航</a></div>
+       </div>`).join('')}
+   </div>`).join('');
+}
+/* ---- portland map 9/28-10/1 ---- */
+const PDAYS=[
+{
+ id:'d1',name:'D1 · 9/28 周一 · 落地即峡谷',color:'#2563eb',
+ sum:'PDX 10:09 落地取车 → I-84 东进 30min → Latourell → Multnomah → Hood River → 回波特兰。机场离峡谷入口仅 10min，落地日动线最顺。',
+ route:[[45.5887,-122.5975],[45.5820,-122.5600],[45.5730,-122.5000],[45.5560,-122.4100],[45.5450,-122.3400],[45.5338,-122.2214],[45.5480,-122.1900],[45.5600,-122.1500],[45.5762,-122.1158],[45.5900,-122.0500],[45.6350,-121.8600],[45.6800,-121.6600],[45.7054,-121.5218]],
+ back:[[45.7054,-121.5218],[45.6600,-121.7000],[45.5900,-122.0600],[45.5400,-122.3900],[45.5600,-122.5600],[45.5300,-122.6700],[45.5266,-122.6835]],
+ spots:[
+  {ll:[45.5887,-122.5975],t:'PDX 机场 · 取车',time:'10:09 落地 · 11:00 出发',why:'租车中心 consolidated facility，机场摆渡车约 10min。取车时顺手问清还车加油站位置，D4 不抓瞎。'},
+  {ll:[45.5338,-122.2214],t:'Latourell Falls',time:'~12:00 · 停留 30min',why:'第一站选它因为人最少：249ft 单柱瀑布，步道铺装步行 10min 即到观景位，落地日热身刚好。'},
+  {ll:[45.5762,-122.1158],t:'Multnomah Falls',time:'~13:00 · 停留 1h',why:'俄勒冈最高瀑布 620ft，本线必打卡。铺装路走到 Benson Bridge 25min；体力好续到瀑布顶 +40min，注意水雾打湿镜头。'},
+  {ll:[45.7054,-121.5218],t:'Hood River · 河畔午餐',time:'~15:00 · 停留 1h',why:'风帆冲浪之都，河畔看白帆+对岸华盛顿州。I-84 沿河风景最好的一段，午餐顺路解决。'},
+  {ll:[45.3276,-121.7449],t:'Timberline Lodge（可选）',time:'体力富余再启用 · +1h15m',why:'《闪灵》外景取景地、国家历史地标。启用条件：从 Hood River 改走 OR-35 绕 Mt Hood 环回，不走回头路。落地日+前晚飞行，默认不排。'},
+  {ll:[45.5266,-122.6835],t:'Pearl District · 晚餐+酒店',time:'~18:30',why:'波特兰最有活力的街区，晚餐+精酿（Deschutes/Breakside）步行解决，酒店订在这附近省心。'}
+ ]
+},
+{
+ id:'d2',name:'D2 · 9/29 周二 · 市区半天 → Astoria',color:'#16a34a',
+ sum:'上午波特兰市区三点收完（半径 2mi 内）→ 14:30 出发 US-30 北上 1h45m → 17:00 Astoria Column 日落 → 住 Astoria。',
+ route:[[45.5186,-122.7059],[45.5251,-122.7165],[45.5210,-122.6900],[45.5233,-122.6812],[45.5400,-122.7800],[45.6000,-122.9200],[45.7200,-123.0900],[45.8500,-123.2200],[46.0500,-123.4200],[46.1500,-123.6500],[46.1887,-123.8315],[46.1890,-123.7364]],
+ back:null,
+ spots:[
+  {ll:[45.5186,-122.7059],t:'日本花园 Portland Japanese Garden',time:'10:00 开门 · 1-1.5h',why:'公认北美最佳日式花园，10 月红叶初染是颜值上升期。10 点开门掐点进，避开团队客。'},
+  {ll:[45.5251,-122.7165],t:'Pittock Mansion 观景台',time:'~11:30 · 15min',why:'城市天际线 + Mt Hood 同框的唯一机位，就在日本花园上山路顺方向，不顺路不会专门来。'},
+  {ll:[45.5175,-122.6775],t:'Food Pod · 午餐',time:'~12:30',why:'波特兰发明了美食车文化（全城 600+ 辆），选一个 pod 混吃比进餐厅更本地。'},
+  {ll:[45.5233,-122.6812],t:"Powell's City of Books",time:'~13:30 · 快逛 30min',why:'全球最大独立书店，占一整个街区。买书留到回程日不现实，快逛拍到此一游即可。'},
+  {ll:[46.1890,-123.7364],t:'Astoria Column · 日落',time:'17:00 · $5',why:'164 级旋转楼梯登顶，河口+小镇+太平洋 360°。9 月底日落约 19:05，17 点到先看景等落日黄金时刻。'},
+  {ll:[46.1887,-123.8315],t:'Astoria · 住一晚',time:'晚餐+入住',why:'Bowpicker 鱼薯是当地传奇但约 18:00 打烊，赶不上改 Buoy Beer 河景精酿+餐。'}
+ ]
+},
+{
+ id:'d3',name:'D3 · 9/30 周三 · Astoria → Cannon Beach',color:'#ea580c',
+ sum:'晨间 Riverwalk 河畔散步 → Pier 39 罐头码头早餐 → 海事博物馆 → Goondocks → Megler 大桥机位 → US-101 南下 → Cannon Beach 潮池 + Haystack 日落。',
+ route:[[46.1887,-123.8315],[46.1940,-123.8330],[46.2000,-123.8300],[46.2074,-123.8255],[46.2067,-123.8270],[46.1990,-123.8240],[46.1946,-123.8215],[46.1916,-123.8400],[46.1770,-123.8210],[46.1400,-123.8800],[46.0200,-123.9200],[45.9300,-123.9500],[45.8848,-123.9725]],
+ back:null,
+ spots:[
+  {ll:[46.1906,-123.8335],t:'Astoria Riverwalk · 晨间散步',time:'~08:15 · 30-45min',why:'沿河木栈道，河面晨雾 + 对岸华盛顿州 + 缓慢通过的货轮，是 Astoria 最舒服的打开方式。住河畔酒店出门就是。'},
+  {ll:[46.2074,-123.8255],t:'Pier 39 · Coffee Girl 早餐',time:'~09:00 · 45min',why:'1900 年代罐头厂改造的码头，Coffee Girl 咖啡 + 甜甜圈。此处回望 Astoria–Megler 大桥视角绝佳，早餐+机位二合一。'},
+  {ll:[46.2067,-123.8270],t:'Columbia River Maritime Museum',time:'09:30 开门 · 1-1.5h',why:'Astoria 精华馆：「河流的坟场」沉船史 + 采砂船驾驶舱实舰。全程室内，天然雨天 B 计划。就在 Pier 39 隔壁，步行 2min。'},
+  {ll:[46.1946,-123.8215],t:'Goondocks · 《七宝奇谋》',time:'~11:00 · 快闪拍照',why:'1985 电影取景地，影迷必打卡。只拍外观别扰民（仍是私人住宅区）。'},
+  {ll:[46.1916,-123.8400],t:'Astoria–Megler Bridge 机位',time:'~11:30 · 15min',why:'4 英里长桥飞跨哥伦比亚河，俄勒冈最上镜的人工奇观。Marine Dr 西段河堤是最佳仰拍点，拍完顺手即走。'},
+  {ll:[46.1886,-123.8284],t:'Flavel House（可选）',time:'+30min',why:'维多利亚时代老宅，对建筑史感兴趣再加，否则跳过不心疼。'},
+  {ll:[45.8848,-123.9725],t:'Haystack Rock · 潮池+日落',time:'低潮前后 1h + 19:00 日落',why:'235ft 海蚀柱是俄勒冈海岸名片。低潮走近看潮池（海星、寄居蟹、海葵），务必提前查 tide chart；退不了潮就海滩远观等日落。'}
+ ]
+},
+{
+ id:'d4',name:'D4 · 10/1 周四 · Ecola → 回 PDX',color:'#7c3aed',
+ sum:'海滩晨光 → Ecola SP 制高点 → US-26 内陆直线 1h30m 回 PDX → 加油还车 → 17:53 AS1393 飞回 SFO。',
+ route:[[45.8848,-123.9725],[45.8950,-123.9637],[45.9207,-123.9637],[45.9100,-123.8600],[45.8700,-123.6800],[45.7900,-123.4500],[45.7000,-123.2000],[45.6300,-122.9000],[45.6000,-122.7200],[45.5887,-122.5975]],
+ back:null,
+ spots:[
+  {ll:[45.8848,-123.9725],t:'海滩晨光',time:'~07:30（10月日出约 7:15）',why:'住 Cannon Beach 的独享福利：推窗即海滩，晨光下的 Haystack 几乎无人。'},
+  {ll:[45.9207,-123.9637],t:'Ecola State Park',time:'09:00 · 40min-1.5h',why:'整段海岸线制高点：南望 Haystack、北看 Crescent Beach。体力版走 Indian Beach 往返 1.5mi，轻松版观景台步行 10min。雨后泥地只去观景台。'},
+  {ll:[45.5887,-122.5975],t:'PDX · 还车+值机',time:'14:45 还车 · 17:53 起飞',why:'US-26 是回 PDX 唯一直线，别走海岸回头路。预留加油（机场外围比场内便宜）+ 还车摆渡 40min 余量。AS1393 → 19:54 落 SFO。'}
+ ]
+}
+];
+let pmap=null,players={},pmarkerById={},pmapInit=false,pBase='amap';
+function initPdxMap(){
+  if(pmapInit)return;
+  if(typeof L==='undefined'){document.getElementById('pmap').innerHTML='<div style="padding:24px;font-size:13px;color:#6b7280">地图库（unpkg CDN）当前网络不可达：切手机流量或其他网络后刷新即可，右侧行程清单不受影响。</div>';return;}
+  pmapInit=true;
+  pmap=L.map('pmap',{scrollWheelZoom:true}).setView([45.82,-122.9],8);
+  const amapP=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:['1','2','3','4'],attribution:'&copy; 高德地图'});
+  const osmP=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'});
+  amapP.addTo(pmap);
+  const swP=L.control({position:'topright'});
+  swP.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML='<button data-b="amap" class="on">高德</button><button data-b="osm">OSM</button>';L.DomEvent.disableClickPropagation(d);d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===pBase)return;pmap.removeLayer(pBase==='amap'?amapP:osmP);(b.dataset.b==='amap'?amapP:osmP).addTo(pmap);pBase=b.dataset.b;d.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));});return d;};
+  swP.addTo(pmap);
+  PDAYS.forEach(d=>{
+    const g=L.layerGroup();
+    if(d.back){L.polyline(d.back,{color:d.color,weight:3,opacity:.45,dashArray:'8,8'}).addTo(g);}
+    L.polyline(d.route,{color:d.color,weight:4,opacity:.85}).addTo(g);
+    d.spots.forEach((s,i)=>{
+      const ic=L.divIcon({className:'',iconSize:[24,24],iconAnchor:[12,12],html:`<div style="width:24px;height:24px;border-radius:50%;background:${d.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">${i+1}</div>`});
+      const mk=L.marker(s.ll,{icon:ic}).addTo(g);
+      mk.bindPopup(`<div class="pop-t">${s.t}</div><span class="pop-c" style="background:${d.color}">${d.name.split('·')[0].trim()}</span><div class="pop-time">⏱ ${s.time}</div><div class="pop-note">${s.why}</div><a class="pop-nav" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.ll[0]},${s.ll[1]}&travelmode=driving">🧭 Google 导航</a>`);
+      mk.on('click',()=>pHl(d.id,i,false));
+      pmarkerById[d.id+'-'+i]=mk;
+    });
+    players[d.id]=g;
+  });
+  pShow('all');pRenderSide('all');
+  document.getElementById('ptabs').addEventListener('click',e=>{
+    const b=e.target.closest('.rmtab');if(!b)return;
+    document.querySelectorAll('#ptabs .rmtab').forEach(t=>t.classList.toggle('on',t===b));
+    pShow(b.dataset.pv);pRenderSide(b.dataset.pv);
+  });
+}
+function pShow(v){
+  Object.values(players).forEach(g=>pmap.removeLayer(g));
+  if(v==='all'){Object.values(players).forEach(g=>g.addTo(pmap));pmap.fitBounds([[45.25,-123.99],[46.28,-121.4]],{padding:[30,30]});}
+  else{const d=PDAYS.find(x=>x.id===v);players[v].addTo(pmap);const pts=[...d.route];pmap.fitBounds(L.latLngBounds(pts).pad(.25));}
+}
+function pHl(dayId,idx,fly){
+  document.querySelectorAll('.rspot').forEach(el=>el.style.background='');
+  const el=document.getElementById('psp-'+dayId+'-'+idx);
+  if(el){el.style.background='#eef2f7';el.scrollIntoView({block:'nearest',behavior:'smooth'});}
+  if(fly){pmap.flyTo(PDAYS.find(d=>d.id===dayId).spots[idx].ll,13,{duration:.8});setTimeout(()=>pmarkerById[dayId+'-'+idx].openPopup(),850);}
+}
+function pRenderSide(v){
+  document.getElementById('pside').innerHTML=PDAYS.filter(d=>v==='all'||d.id===v).map(d=>`
+   <div class="daycard">
+     <h2><i style="background:${d.color}"></i>${d.name}</h2>
+     <div class="dsum">${d.sum}</div>
+     ${d.spots.map((s,i)=>`
+       <div class="rspot" id="psp-${d.id}-${i}" onclick="pHl('${d.id}',${i},true)">
+         <div class="n" style="background:${d.color}">${i+1}</div>
+         <div class="st"><b>${s.t}</b><span>⏱ ${s.time}</span><div class="why">${s.why}</div><a class="nav-link" target="_blank" rel="noopener" onclick="event.stopPropagation()" href="https://www.google.com/maps/dir/?api=1&destination=${s.ll[0]},${s.ll[1]}&travelmode=driving">🧭 Google 导航</a></div>
+       </div>`).join('')}
+   </div>`).join('');
+}
+/* ---- tabs ---- */
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on', s.id==='v-'+b.dataset.v));
+  if(b.dataset.v==='ridemap'){ initRideMap(); setTimeout(()=>{ if(rmap) rmap.invalidateSize(); },60); }
+  if(b.dataset.v==='pdxmap'){ initPdxMap(); setTimeout(()=>{ if(pmap) pmap.invalidateSize(); },60); }
+});
+/* ---- countdown ---- */
+const dep = new Date('2026-09-26T22:30:00+08:00');
+const dd = Math.ceil((dep - new Date())/864e5);
+document.getElementById('countdown').textContent = dd>0 ? `距出发 ${dd} 天` : '行程进行中';
+/* ---- ICS export ---- */
+function icsLine(l){ return l.replace(/([,;])/g,'\\$1').replace(/\n/g,'\\n'); }
+function exportICS(){
+  const L = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//us-trip-2026//CN','CALSCALE:GREGORIAN'];
+  const ts = new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  DAYS.forEach((d,i)=>{
+    const ymd = d.d.replace(/-/g,'');
+    L.push('BEGIN:VEVENT',`UID:day-${ymd}@us-trip`,`DTSTAMP:${ts}`,`DTSTART;VALUE=DATE:${ymd}`,`DTEND;VALUE=DATE:${ymd}`,
+      `SUMMARY:${icsLine(`美西 D${i} ${d.t}`)}`,
+      `DESCRIPTION:${icsLine(d.items.map(x=>x[0]+' '+x[1]).join('\n')+(d.stay?'\n宿：'+d.stay:''))}`,
+      'END:VEVENT');
+  });
+  const FLY = [
+    {s:'2026-09-26T14:30:00Z',e:'2026-09-27T03:10:00Z',sum:'✈ UA878 香港→旧金山',des:'22:30 HKG 起飞 / 20:10 落地 SFO（已出票）'},
+    {s:'2026-09-28T15:23:00Z',e:'2026-09-28T17:09:00Z',sum:'✈ AS1411 旧金山→波特兰',des:'08:23 SFO → 10:09 PDX（已出票）'},
+    {s:'2026-10-02T00:53:00Z',e:'2026-10-02T02:54:00Z',sum:'✈ AS1393 波特兰→旧金山',des:'10/1 17:53 PDX → 19:54 SFO（已出票）'},
+    {s:'2026-10-11T07:50:00Z',e:'2026-10-11T20:00:00Z',sum:'✈ NH105 洛杉矶→羽田',des:'10/11 00:50 LAX → 10/12 05:00 HND（已出票）'},
+    {s:'2026-10-12T02:10:00Z',e:'2026-10-12T07:10:00Z',sum:'✈ NH965 羽田→深圳',des:'11:10 HND T3 → 15:10 SZX（已出票）'}
+  ];
+  FLY.forEach((f,i)=>{
+    L.push('BEGIN:VEVENT',`UID:fly-${i}@us-trip`,`DTSTAMP:${ts}`,`DTSTART:${f.s}`,`DTEND:${f.e}`,
+      `SUMMARY:${icsLine(f.sum)}`,`DESCRIPTION:${icsLine(f.des)}`,
+      'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY',`DESCRIPTION:${icsLine(f.sum)}`,'END:VALARM','END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  const blob = new Blob([L.join('\r\n')],{type:'text/calendar;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'us-trip-2026.ics'; a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}</script></body>
+</html>
