@@ -62,7 +62,7 @@ section.on{display:block}
 .items b{display:inline-block;min-width:44px;color:var(--ink);font-weight:600}
 .c-foot{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--sub)}
 /* flights */
-.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:14px}.fcard{min-width:0;overflow-wrap:anywhere}
 .fcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
 .f-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .f-no{font-size:13px;font-weight:600}
@@ -70,6 +70,8 @@ section.on{display:block}
 .st.booked{background:#dcfce7;color:#15803d}
 .st.todo{background:#fee2e2;color:#b91c1c}
 .st.confirm{background:#fef3c7;color:#a16207}
+.st.paid{background:#dbeafe;color:#1d4ed8}
+.fsec{font-size:15px;font-weight:800;margin:18px 0 10px}
 .f-route{font-size:18px;font-weight:700;letter-spacing:.5px}
 .f-times{display:flex;gap:20px;margin:8px 0 4px}
 .f-times div{font-size:13px;color:var(--sub)}
@@ -170,7 +172,7 @@ header{padding-top:calc(14px + env(safe-area-inset-top))}
     <button class="tab on" data-v="trip">行程总览</button>
     <button class="tab" data-v="ridemap">骑行地图</button>
     <button class="tab" data-v="pdxmap">波特兰地图</button>
-    <button class="tab" data-v="flights">航班</button>
+    <button class="tab" data-v="flights">航班·租车</button>
     <button class="tab" data-v="pack">装备清单</button>
     <button class="tab" data-v="todo">待办</button><a class="tab" href="booking.html" style="text-decoration:none">逐日+预订 ›</a>
   </div>
@@ -225,7 +227,7 @@ header{padding-top:calc(14px + env(safe-area-inset-top))}
       </div>
     </div>
   </section>
-  <section id="v-flights"><div class="fgrid" id="fgrid"></div></section>
+  <section id="v-flights"><div class="fsec">✈ 航班</div><div class="fgrid" id="fgrid"></div><div class="fsec">🚗 租车</div><div class="fgrid" id="cgrid"></div></section>
   <section id="v-pack">
     <div class="ptext" id="ptext"></div>
     <div class="pbar"><i id="pbar"></i></div>
@@ -234,29 +236,10 @@ header{padding-top:calc(14px + env(safe-area-inset-top))}
   </section>
   <section id="v-todo">
     <div id="todo"></div>
-    <div class="daycard" style="margin-top:14px">
-      <h2><i style="background:#dc2626"></i>🚗 PDX 租车比价</h2>
-      <div class="dsum">9/28 10:30 取 · 10/1 14:30 还（4 整天，匹配 AS1411 10:09 落地 / AS1393 17:53 起飞）· 行情参考 $250-350 全包</div>
-      <div style="font-size:13px;line-height:2.1">
-        <b>🇨🇳 中文渠道</b><br>
-        · <a href="https://www.zuzuche.com/" target="_blank">租租车 zuzuche.com</a> —— 和国际驾照翻译认证件同源，件和订单一处管理<br>
-        · <a href="https://us.trip.com/carhire/to-united-states-66/portland-25858/portland-international-airport-pdx/" target="_blank">Trip.com 国际租车 · PDX 页</a> —— 报价含基础险，比价时注意口径对齐<br>
-        <b>🔍 比价 & 盯价</b><br>
-        · <a href="https://www.kayak.com/car-rentals" target="_blank">Kayak 租车比价</a> —— 一屏比完全部车行，先看行情底线<br>
-        · <a href="https://www.autoslash.com/" target="_blank">AutoSlash</a> —— 免费盯价，降价自动提醒重订（4 天窗口内大概率捡到一次降价）<br>
-        · <a href="https://www.priceline.com/drive/" target="_blank">Priceline</a> —— Express Deals 灵活牌常有低价<br>
-        <b>🏷 直订折扣</b><br>
-        · <a href="https://www.budget.com/" target="_blank">Budget 官网</a> —— 下单时 Offer Codes 填 BCD 码 <b>A740300</b>（公开码，基础价约 -25%）<br>
-        · <a href="https://www.costcotravel.com/" target="_blank">Costco Travel</a> —— 会员价常为最低档 + 免副驾费（可让湾区朋友代订）<br>
-      </div>
-      <div style="font-size:12.5px;color:#374151;margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)">
-        <b>策略</b>：先下免费取消单锁库存 → AutoSlash 盯价 → 降价就重订。<br>
-        <b>PDX 落地</b>：俄勒冈禁止自助加油（全程有人服务）；本地无 toll，柜台 toll pass 直接拒；押金 $200-400 信用卡预授权；取还车全车拍照（Budget 有 AI 划痕扫描仪）。
-      </div>
-    </div>
+    <div class="daycard" style="margin-top:14px"><h2><i style="background:#16a34a"></i>🚗 租车已订</h2><div class="dsum">PDX Alamo（9/28-10/1）· LAX Europcar（10/7-10/10）· SFO Thrifty 待补信息。订单号、取还车时间、待办都在「航班·租车」Tab。</div><div style="font-size:12.5px;color:#374151;margin-top:8px">俄勒冈禁止自助加油；取还车全车拍照；押金 $200-400 信用卡预授权；带护照、驾照原件、翻译件、本人信用卡。</div></div>
   </section>
 </main>
-<footer>us-trip-2026 · 更新于 2026-09-20（波特兰地图整合进总览 · 全点位 Google 导航 · 骑行 D1/D2 定稿）· 数据以已出票信息为准</footer>
+<footer>us-trip-2026 · 更新于 2026-09-25（航班 WN1275 · 租车 Alamo / Europcar 已订）· 数据以已出票信息为准</footer>
 <script src="leaflet.js"></script>
 <script>
 const PH = {
@@ -268,19 +251,19 @@ const WD = ['日','一','二','三','四','五','六'];
 const DAYS = [
  {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['22:30','UA878 起飞（已出票）'],['20:10','落地 SFO（夏令时差 15h，同日到达）'],['21:30','出关取行李，Uber/Lyft ~40min → Mountain View'],['深夜','Airbnb 自助入住（469 Sierra Vista Ave A，房东 Gang），倒时差']],stay:'Mountain View Airbnb（已订）',mv:'Uber $35-50'},
  {d:'2026-09-27',ph:'bay',t:'南湾叙旧',loc:'Sunnyvale / 南湾',items:[['上午','自然醒，倒时差'],['中午','湾区朋友叙旧饭局']],stay:'Mountain View Airbnb（已订）'},
- {d:'2026-09-28',ph:'pdx',t:'飞波特兰 · 哥伦比亚河峡谷',loc:'SFO ✈ PDX → Columbia Gorge',items:[['06:30','Airbnb 退房，Uber 赴 SFO（周一早高峰预留 1h）'],['08:23','AS1411 SFO→PDX 起飞（已出票）'],['10:09','落地 PDX，机场取车'],['中午','I-84 东进 Columbia River Gorge（45min）'],['下午','Latourell Falls → Multnomah Falls → Hood River'],['晚','Evermore Guesthouse 自助入住（3860 SE Clinton St，15:00 后），SE Division St 晚饭']],stay:'Evermore Guesthouse（已订）',mv:'租车 Day 1'},
+ {d:'2026-09-28',ph:'pdx',t:'飞波特兰 · 哥伦比亚河峡谷',loc:'SFO ✈ PDX → Columbia Gorge',items:[['06:30','Airbnb 退房，Uber 赴 SFO（周一早高峰预留 1h）'],['08:23','AS1411 SFO→PDX 起飞（已出票）'],['10:09','落地 PDX，Rental Car Center 取车（Alamo，已订）'],['中午','I-84 东进 Columbia River Gorge（45min）'],['下午','Latourell Falls → Multnomah Falls → Hood River'],['晚','Evermore Guesthouse 自助入住（3860 SE Clinton St，15:00 后），SE Division St 晚饭']],stay:'Evermore Guesthouse（已订）',mv:'租车 Day 1'},
  {d:'2026-09-29',ph:'pdx',t:'波特兰 → Astoria',loc:'US-30 北上 1h45m',items:[['上午','日本花园 / Powell\'s 书店'],['中午','food pods 午餐'],['下午','驱车北上 Astoria'],['傍晚','Astoria Column 看日落（154 级旋转楼梯）']],stay:'The Inn at 515 15th（已订）',mv:'租车 Day 2'},
  {d:'2026-09-30',ph:'pdx',t:'Astoria → Cannon Beach',loc:'US-101 南下 40min',items:[['上午','Goondocks《七宝奇谋》取景地 + 海事博物馆 + 哥伦比亚河口'],['下午','南下到 Cannon Beach'],['傍晚','Haystack Rock 日落（退潮时可走近）']],stay:'Cannon Beach 酒店',mv:'租车 Day 3'},
- {d:'2026-10-01',ph:'pdx',t:'Ecola SP → 还车 → 回湾区',loc:'Cannon Beach → PDX ✈ SFO',items:[['清晨','海滩晨光散步'],['上午','Ecola State Park 眺望太平洋'],['13:00','出发回 PDX（1.5h，途中加油）'],['14:45','机场还车 + 值机 AS1393'],['17:53','AS1393 PDX→SFO 起飞（已出票）'],['19:54','落地 SFO，Uber ~50min 回 Sunnyvale']],stay:'Sunnyvale 酒店',mv:'还车 + 航班'},
+ {d:'2026-10-01',ph:'pdx',t:'Ecola SP → 还车 → 回湾区',loc:'Cannon Beach → PDX ✈ SFO',items:[['清晨','海滩晨光散步'],['上午','Ecola State Park 眺望太平洋'],['12:15','出发回 PDX（1.5h，途中加满油）'],['13:45','PDX 还车（Alamo，14:00 前）+ 值机 AS1393'],['17:53','AS1393 PDX→SFO 起飞（已出票）'],['19:54','落地 SFO，Uber ~50min 回 Sunnyvale']],stay:'Sunnyvale 酒店',mv:'还车 + 航班'},
  {d:'2026-10-02',ph:'buf',t:'缓冲日 · 出差预热',loc:'Sunnyvale',items:[['上午','洗衣、休整、工作邮件、出差材料'],['下午','轻量选项：Stanford 校园 / Apple Park 访客中心（免费）'],['晚间','确认借车细节（保险 permissive use + 头盔）+ Big Sur 天气']],stay:'Sunnyvale 酒店'},
  {d:'2026-10-03',ph:'bay',t:'周末 2 · 朋友自驾',loc:'Napa 酒乡（首选）',items:[['全天','Napa 酒乡（10 月收获季尾巴）'],['备选','Monterey / Carmel 17-Mile Drive（摩托 D1/D2 已覆盖同区域）']],stay:'Sunnyvale 酒店',mv:'朋友自驾'},
  {d:'2026-10-04',ph:'bay',t:'周末 2 · 轻松家聚',loc:'南湾',items:[['全天','家聚 / BBQ / 金门公园'],['晚','早收，为骑行日蓄力']],stay:'Sunnyvale 酒店'},
  {d:'2026-10-05',ph:'ride',t:'摩托 D1 · Hwy 1 北段',loc:'Sunnyvale → Hwy 9 → Santa Cruz → Carmel',items:[['09:15','Sunnyvale 满油出发（借车 Monster 821）'],['09:45','Hwy 9 红杉山道热身 → Santa Cruz'],['11:00','West Cliff Drive 看 Steamer Lane 冲浪 + 早午餐'],['12:00','冲浪博物馆开门即入（周一 12-16 点，免费）'],['13:30','Hwy 1 南下 → Moss Landing 桥头看海獭'],['14:30','Monterey Cannery Row 快逛 + 咖啡（顺路补油）'],['15:45','Laguna Seca gift shop（17:00 关门，勿拖）'],['17:15','Pacific Grove / Asilomar 日落（约 18:30）'],['19:00','Carmel 入住 + 晚餐（全天约 100mi）']],stay:'Carmel / Monterey 酒店',mv:'摩托 · 借 Ducati Monster 821'},
  {d:'2026-10-06',ph:'ride',t:'摩托 D2 · Big Sur 主菜',loc:'Point Lobos → Bixby → McWay 折返',items:[['08:00','Carmel 加满油出发（晨雾期先排 Point Lobos）'],['08:10','Point Lobos 州立保护区（8 点开门 $10，海獭活跃）'],['10:10','Bixby Bridge 桥北观景台（雾散后拍照）'],['10:30','Hurricane Point 顺路停留'],['11:45','Nepenthe 悬崖露台早午饭（周二歇业则 Big Sur River Inn）'],['13:15','McWay Falls 路边观景台，到此折返'],['15:30','回 Carmel → Hwy 68 → 101 北上（省 40min）'],['18:00','Sunnyvale 还车 + 朋友晚饭（全天约 180mi）']],stay:'Sunnyvale 酒店',mv:'摩托还车'},
- {d:'2026-10-07',ph:'work',t:'飞 LA · 出差开始',loc:'SJC ✈ LAX → Culver City',items:[['上午','SJC→LAX 直飞 1h20m（待确认订票方）'],['午后','Uber 到 Culver City 入住'],['着装','商务休闲：Polo/衬衫 + 干净裤子']],stay:'Culver City 酒店'},
- {d:'2026-10-08',ph:'work',t:'Culver City 出差',loc:'Culver City, LA',items:[['全天','出差 Day 2']],stay:'Culver City 酒店'},
- {d:'2026-10-09',ph:'work',t:'Culver City 出差',loc:'Culver City, LA',items:[['全天','出差 Day 3（行程至 10/9）']],stay:'Culver City 酒店'},
- {d:'2026-10-10',ph:'fly',t:'深夜赴 LAX 值机',loc:'Culver City → LAX',items:[['白天','休整 / 收尾'],['22:00','赴 LAX 国际航站楼（NH105 00:50 起飞，提前 3h）']],stay:'机场'},
+ {d:'2026-10-07',ph:'work',t:'SFO → LAX · 拜访 That\'s No Moon',loc:'Sunnyvale → SFO ✈ LAX → Playa del Rey',items:[['07:00','Sunnyvale 退房出发（101 北早高峰，约 50min）'],['07:50','SFO 租车中心还车（Thrifty），AirTrain 去 T2'],['10:20','WN1275 SFO T2 → LAX T1（已支付），11:45 落地'],['12:15','接驳巴士去 Europcar 取车（已订）+ 午饭'],['14:00','That\'s No Moon 拜访（14:00-17:00）'],['17:15','Inn at Playa del Rey 入住，赶红酒奶酪'],['18:30','Playa del Rey 海滩日落'],['着装','商务休闲：Polo/衬衫 + 干净裤子']],stay:'Inn at Playa del Rey（已订）',mv:'WN1275 + Europcar'},
+ {d:'2026-10-08',ph:'work',t:'自由上午 · 傍晚装包',loc:'Playa del Rey / Culver City',items:[['上午','酒店早餐；可选 Getty Center（免费，需预约）'],['傍晚','测试场地装包（600 Corporate Pointe）']],stay:'Inn at Playa del Rey（已订）',mv:'租车 Europcar'},
+ {d:'2026-10-09',ph:'work',t:'线下测试',loc:'Culver City',items:[['全天','线下测试（开车约 15min）']],stay:'Inn at Playa del Rey（已订）',mv:'租车 Europcar'},
+ {d:'2026-10-10',ph:'fly',t:'自由活动 · 深夜赴 LAX',loc:'Malibu → Venice → LAX',items:[['11:00','退房，行李寄存前台或放后备箱'],['中午','Malibu 海滩 / El Matador'],['下午','Venice 运河 + 海滩步道，日落'],['20:30','Europcar 还车（先加满油，接驳巴士约 10min）'],['22:00','LAX 国际航站楼值机（NH105 00:50 起飞）']],stay:'机场',mv:'Europcar 还车'},
  {d:'2026-10-11',ph:'fly',t:'LAX → 羽田',loc:'LAX ✈ HND',items:[['00:50','NH105 起飞（已出票，ANA 787）'],['全程','机上过夜，约 11h']],stay:'机上'},
  {d:'2026-10-12',ph:'home',t:'羽田转机 → 深圳',loc:'HND T2→T3 ✈ SZX',items:[['05:00','落地羽田 T2'],['上午','空侧转机巴士 T2→T3（同日转机免签，行李直挂）'],['11:10','NH965 起飞 → 15:10 落地深圳']],stay:'到家 🏠'}
 ];
@@ -288,7 +271,7 @@ const FLIGHTS = [
  {rt:'HKG → SFO',dt:'9/26 周六',dep:'22:30',arr:'20:10 当日',no:'UA878 美联航 · 787',st:'booked',note:'已出票。飞行约 12.5h，落地后 BART 末班车约 23:00 赶得上但偏紧，行李多直接 Uber $35-50。'},
  {rt:'SFO → PDX',dt:'9/28 周一',dep:'08:23',arr:'10:09',no:'AS1411 阿拉斯加 · 经济舱',st:'booked',note:'已出票（0 托运 · 2 随身）。Sunnyvale → SFO 周一早高峰预留 1h+，06:30 前上车；提前 24h 在 Alaska App 值机选座。'},
  {rt:'PDX → SFO',dt:'10/1 周四',dep:'17:53',arr:'19:54',no:'AS1393 阿拉斯加 · 经济舱',st:'booked',note:'已出票（0 托运 · 2 随身）。行李仅 Little America 背包，还车后无托运负担；落地 SFO 后 Uber ~50min 回 Sunnyvale。'},
- {rt:'SJC → LAX',dt:'10/7 周三',dep:'待定',arr:'待定',no:'待确认',st:'confirm',note:'出差段，先确认公司是否订票；自订的话 Southwest / Alaska 均有直飞 1h20m，$60-120 区间。'},
+ {rt:'SFO → LAX',dt:'10/7 周三',dep:'10:20 T2',arr:'11:45 T1',no:'WN1275 西南航空',st:'paid',note:'已支付 ¥1,325（自费，不得退改），含 1 件 23kg 托运。订单 ITX9XG260925BP5Z7458，48h 内出票，拿到 6 位确认号后在西南 App 值机（起飞前 24h 抢 A 组）。07:50 前到 SFO 租车中心还 Thrifty，AirTrain 去 T2。'},
  {rt:'LAX → HND',dt:'10/11 周日',dep:'00:50',arr:'05:00 +1',no:'NH105 全日空 · 787',st:'booked',note:'已出票（经济 V 舱联程）。10/10 深夜 22:00 前到 LAX 国际航站楼值机。'},
  {rt:'HND → SZX',dt:'10/12 周一',dep:'11:10',arr:'15:10',no:'NH965 全日空 · T3',st:'booked',note:'已出票。羽田 T2→T3 空侧转机巴士，同日转机免日本签证、行李直挂深圳。'}
 ];
@@ -306,14 +289,19 @@ const TODOS = [
  {p:'done',x:'EVUS 登记（9/19 Enrolled，2 年有效；下载 PDF + 打印夹护照）'},
  {p:'done',x:'SFO⇄PDX 机票（9/28 AS1411 08:23 / 10/1 AS1393 17:53，已出票 · 0 托运 2 随身）'},
  {p:'warn',x:'核对翻译小白本：D 必须译成 motorcycle 类别'},
- {p:'hot',x:'PDX 机场租车 9/28-10/1（翻译件即可租普通轿车 · 比价链接见下方「PDX 租车比价」卡片）'},
+ {p:'done',x:'PDX 租车 Alamo 已订（Trip.com 1359048159771462，9/28 10:00 → 10/1 14:00）'},
+ {p:'done',x:'LA 租车 Europcar 已订（Trip.com 1359048159805593，10/7 → 10/10，公司报销）'},
+ {p:'hot',x:'Europcar 取车时间改到 12:30 或补填航班号 WN1275（否则只保留到 12:30）'},
+ {p:'hot',x:'Alamo 订单补填航班号 AS1411（10:09 落地晚于 10:00 取车时间）'},
+ {p:'warn',x:'SFO Thrifty 湾区租车：订单号 / 取车时间未录入，补确认邮件'},
  {p:'hot',x:'Sunnyvale 酒店：10/1-10/5 + 10/6-10/7（9/26-28 已订 Mountain View Airbnb；问房东能否寄存大件行李至 10/1）'},
  {p:'mid',x:'借车 Monster 821 收尾：电话确认保险覆盖（permissive use / 临时加为 covered rider）+ 备用头盔，无盔则 Cycle Gear 买 DOT 全盔'},
  {p:'mid',x:'Carmel / Monterey 10/5 一晚住宿（周中淡季，选可免费取消房型）'},
  {p:'mid',x:'出发前电话确认：Laguna Seca 商店 (831) 242-8201 · Nepenthe 周二营业 (831) 667-2345 · Caltrans Big Sur 路况'},
  {p:'mid',x:'eSIM 购买（出发前买好，落地即用；Big Sur 村以南无信号，提前下离线地图）'},
  {p:'mid',x:'迪卡侬采购：冲锋衣 / 抓绒 / 手套 / 软驮包等'},
- {p:'mid',x:'SJC→LAX 10/7 机票确认（公司订 or 自订）'}
+ {p:'done',x:'SFO→LAX 机票 WN1275 10/7 10:20（已支付 ¥1,325）'},
+ {p:'hot',x:'WN1275 等出票拿 6 位确认号（订单 ITX9XG260925BP5Z7458，48h 内）'}
 ];
 /* ---- render ---- */
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
@@ -336,9 +324,22 @@ DAYS.forEach((d,i)=>{
   </div>`);
 });
 document.getElementById('fgrid').innerHTML = FLIGHTS.map(f=>{
-  const st = {booked:'✅ 已出票',todo:'🔴 待订',confirm:'🟡 待确认'}[f.st];
+  const st = {booked:'✅ 已出票',paid:'🟢 已付·待出票',todo:'🔴 待订',confirm:'🟡 待确认'}[f.st];
   return `<div class="fcard"><div class="f-top"><div><div class="f-date">${f.dt}</div><div class="f-no">${f.no}</div></div><span class="st ${f.st}">${st}</span></div>
   <div class="f-route">${f.rt}</div><div class="f-times"><div>出发<b>${f.dep}</b></div><div>到达<b>${f.arr}</b></div></div><div class="f-note">${f.note}</div></div>`;
+}).join('');
+const CARS = [
+ {rt:'PDX 机场 · Alamo',dt:'9/28 周一 → 10/1 周四 · 4 天',dep:'9/28 10:00',arr:'10/1 14:00',no:'Audi Q3 或同级紧凑 SUV',st:'booked',q:'Portland International Airport Rental Car Center',
+  note:'Trip.com 订单 1359048159771462（PIN 看确认邮件）· CNY 1,304 已预付，可免费取消。含 Super CDW 零免赔 + Extra Cover、不限里程、满油取还、1 名附加驾驶员。<br>取车：行李提取处 → South Tunnel → Rental Car Center，Alamo 柜台。<br><b>待办：</b>订单写 10:00 取但 10:09 才落地，在 Trip.com 补填航班号 AS1411；柜台核对 SLI/LIS 保额 $1M；俄勒冈加油有人服务，还车前 NE Airport Way 加满。'},
+ {rt:'SFO 租车中心 · Thrifty',dt:'10/7 周三 07:50 还',dep:'待补',arr:'10/7 07:50',no:'湾区段租车',st:'confirm',q:'SFO Rental Car Center',
+  note:'行程里 10/7 早上在 SFO 租车中心还 Thrifty，再坐 AirTrain 去 T2 赶 WN1275。订单号、取车时间和车型还没录入，把确认邮件发我补上。'},
+ {rt:'LAX · Europcar',dt:'10/7 周三 → 10/10 周六 · 3 天',dep:'10/7 10:30',arr:'10/10 23:00 前',no:'Toyota Camry 或同级中型轿车',st:'booked',q:'5251 W 98th St, Los Angeles, CA 90045',
+  note:'Trip.com 订单 1359048159805593（PIN 看确认邮件）· CNY 1,545 已预付，可取消，公司报销（Trip.com 下载报销凭证）。含超级碰撞盗抢 + 加强第三者责任险，不限里程，满油取还。<br>取车：出航站楼坐免费接驳巴士约 10 分钟到 5251 W 98th St。按行程 10/10 20:30 还。<br><b>⚠️ 待办：</b>航班 11:45 才落地，订单写 10:30 取车，只保留到 12:30，务必改到 12:30 或补填航班号 WN1275。'}
+];
+document.getElementById('cgrid').innerHTML = CARS.map(f=>{
+  const st = {booked:'✅ 已订',confirm:'🟡 待补信息'}[f.st];
+  return `<div class="fcard"><div class="f-top"><div><div class="f-date">${f.dt}</div><div class="f-no">${f.no}</div></div><span class="st ${f.st}">${st}</span></div>
+  <div class="f-route">${f.rt}</div><div class="f-times"><div>取车<b>${f.dep}</b></div><div>还车<b>${f.arr}</b></div></div><div class="f-note">${f.note}<br><a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(f.q)}&travelmode=driving">🧭 导航到取还车点</a></div></div>`;
 }).join('');
 const PCOL = {done:'var(--ok)',hot:'var(--hot)',warn:'var(--warn)',mid:'#d97706'};
 const PTAG = {done:'已完成',hot:'紧急',warn:'注意',mid:'待办'};
@@ -473,7 +474,7 @@ const PDAYS=[
  route:[[45.5887,-122.5975],[45.5820,-122.5600],[45.5730,-122.5000],[45.5560,-122.4100],[45.5450,-122.3400],[45.5338,-122.2214],[45.5480,-122.1900],[45.5600,-122.1500],[45.5762,-122.1158],[45.5900,-122.0500],[45.6350,-121.8600],[45.6800,-121.6600],[45.7054,-121.5218]],
  back:[[45.7054,-121.5218],[45.6600,-121.7000],[45.5900,-122.0600],[45.5400,-122.3900],[45.5600,-122.5600],[45.5300,-122.6700],[45.5266,-122.6835]],
  spots:[
-  {ll:[45.5887,-122.5975],t:'PDX 机场 · 取车',time:'10:09 落地 · 11:00 出发',why:'租车中心 consolidated facility，机场摆渡车约 10min。取车时顺手问清还车加油站位置，D4 不抓瞎。'},
+  {ll:[45.5887,-122.5975],t:'PDX 机场 · 取车',time:'10:09 落地 · Alamo 取车 · 11:00 出发',why:'租车中心 consolidated facility，机场摆渡车约 10min。取车时顺手问清还车加油站位置，D4 不抓瞎。'},
   {ll:[45.5338,-122.2214],t:'Latourell Falls',time:'~12:00 · 停留 30min',why:'第一站选它因为人最少：249ft 单柱瀑布，步道铺装步行 10min 即到观景位，落地日热身刚好。'},
   {ll:[45.5762,-122.1158],t:'Multnomah Falls',time:'~13:00 · 停留 1h',why:'俄勒冈最高瀑布 620ft，本线必打卡。铺装路走到 Benson Bridge 25min；体力好续到瀑布顶 +40min，注意水雾打湿镜头。'},
   {ll:[45.7054,-121.5218],t:'Hood River · 河畔午餐',time:'~15:00 · 停留 1h',why:'风帆冲浪之都，河畔看白帆+对岸华盛顿州。I-84 沿河风景最好的一段，午餐顺路解决。'},
@@ -518,7 +519,7 @@ const PDAYS=[
  spots:[
   {ll:[45.8848,-123.9725],t:'海滩晨光',time:'~07:30（10月日出约 7:15）',why:'住 Cannon Beach 的独享福利：推窗即海滩，晨光下的 Haystack 几乎无人。'},
   {ll:[45.9207,-123.9637],t:'Ecola State Park',time:'09:00 · 40min-1.5h',why:'整段海岸线制高点：南望 Haystack、北看 Crescent Beach。体力版走 Indian Beach 往返 1.5mi，轻松版观景台步行 10min。雨后泥地只去观景台。'},
-  {ll:[45.5887,-122.5975],t:'PDX · 还车+值机',time:'14:45 还车 · 17:53 起飞',why:'US-26 是回 PDX 唯一直线，别走海岸回头路。预留加油（机场外围比场内便宜）+ 还车摆渡 40min 余量。AS1393 → 19:54 落 SFO。'}
+  {ll:[45.5887,-122.5975],t:'PDX · 还车+值机',time:'13:45 还车（Alamo，14:00 前）· 17:53 起飞',why:'US-26 是回 PDX 唯一直线，别走海岸回头路。预留加油（机场外围比场内便宜）+ 还车摆渡 40min 余量。AS1393 → 19:54 落 SFO。'}
  ]
 }
 ];
@@ -606,6 +607,7 @@ function exportICS(){
     {s:'2026-09-26T14:30:00Z',e:'2026-09-27T03:10:00Z',sum:'✈ UA878 香港→旧金山',des:'22:30 HKG 起飞 / 20:10 落地 SFO（已出票）'},
     {s:'2026-09-28T15:23:00Z',e:'2026-09-28T17:09:00Z',sum:'✈ AS1411 旧金山→波特兰',des:'08:23 SFO → 10:09 PDX（已出票）'},
     {s:'2026-10-02T00:53:00Z',e:'2026-10-02T02:54:00Z',sum:'✈ AS1393 波特兰→旧金山',des:'10/1 17:53 PDX → 19:54 SFO（已出票）'},
+    {s:'2026-10-07T17:20:00Z',e:'2026-10-07T18:45:00Z',sum:'✈ WN1275 旧金山→洛杉矶',des:'10:20 SFO T2 → 11:45 LAX T1（已支付）'},
     {s:'2026-10-11T07:50:00Z',e:'2026-10-11T20:00:00Z',sum:'✈ NH105 洛杉矶→羽田',des:'10/11 00:50 LAX → 10/12 05:00 HND（已出票）'},
     {s:'2026-10-12T02:10:00Z',e:'2026-10-12T07:10:00Z',sum:'✈ NH965 羽田→深圳',des:'11:10 HND T3 → 15:10 SZX（已出票）'}
   ];
