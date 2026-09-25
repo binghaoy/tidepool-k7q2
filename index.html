@@ -249,7 +249,7 @@ const PH = {
 };
 const WD = ['日','一','二','三','四','五','六'];
 const DAYS = [
- {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['22:30','UA878 起飞（已出票）'],['20:10','落地 SFO（夏令时差 15h，同日到达）'],['21:30','出关取行李，Uber/Lyft ~40min → Mountain View'],['深夜','Airbnb 自助入住（469 Sierra Vista Ave A，房东 Gang），倒时差']],stay:'Mountain View Airbnb（已订）',mv:'Uber $35-50'},
+ {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['16:30','宝安出发，打车去深圳湾口岸（带护照 + 港澳通行证）'],['17:15','深圳湾过关：内地出境 → 香港入境（港澳通行证走普通通道）'],['18:00','港方口岸坐跨境小巴去机场 T1（¥150；备选 B4 巴士 ~HK$30）'],['19:00','T1 United 柜台托运行李、换登机牌（21:30 截止值机）'],['22:30','UA878 HKG 起飞（已出票）'],['20:10','[美西时间] 落地 SFO，交 CBP 入境'],['21:30','取行李，Uber/Lyft ~40min → Sunnyvale'],['深夜','落地即睡，开始倒时差']],stay:'Sunnyvale 酒店',mv:'深圳湾 + 小巴 ¥150 · UA878 · Uber $35-50'},
  {d:'2026-09-27',ph:'bay',t:'南湾叙旧',loc:'Sunnyvale / 南湾',items:[['上午','自然醒，倒时差'],['中午','湾区朋友叙旧饭局']],stay:'Mountain View Airbnb（已订）'},
  {d:'2026-09-28',ph:'pdx',t:'飞波特兰 · 哥伦比亚河峡谷',loc:'SFO ✈ PDX → Columbia Gorge',items:[['06:30','Airbnb 退房，Uber 赴 SFO（周一早高峰预留 1h）'],['08:23','AS1411 SFO→PDX 起飞（已出票）'],['10:09','落地 PDX，Rental Car Center 取车（Alamo，已订）'],['中午','I-84 东进 Columbia River Gorge（45min）'],['下午','Latourell Falls → Multnomah Falls → Hood River'],['晚','Evermore Guesthouse 自助入住（3860 SE Clinton St，15:00 后），SE Division St 晚饭']],stay:'Evermore Guesthouse（已订）',mv:'租车 Day 1'},
  {d:'2026-09-29',ph:'pdx',t:'波特兰 → Astoria',loc:'US-30 北上 1h45m',items:[['上午','日本花园 / Powell\'s 书店'],['中午','food pods 午餐'],['下午','驱车北上 Astoria'],['傍晚','Astoria Column 看日落（154 级旋转楼梯）']],stay:'The Inn at 515 15th（已订）',mv:'租车 Day 2'},
@@ -291,9 +291,7 @@ const TODOS = [
  {p:'warn',x:'核对翻译小白本：D 必须译成 motorcycle 类别'},
  {p:'done',x:'PDX 租车 Alamo 已订（Trip.com 1359048159771462，9/28 10:00 → 10/1 14:00）'},
  {p:'done',x:'LA 租车 Europcar 已订（Trip.com 1359048159821787，10/7 12:30 → 10/10 23:00，公司报销）'},
-  {p:'hot',x:'Alamo 订单补填航班号 AS1411（10:09 落地晚于 10:00 取车时间）'},
  {p:'done',x:'SFO 租车 Dollar 已订（Trip.com 1359048159815062，10/1 20:00 → 10/7 10:00）'},
- {p:'hot',x:'Dollar 订单补填航班号 AS1393（19:54 落地晚于 20:00 取车）'},
  {p:'hot',x:'湾区 10/1-10/7 住处：到美国再订，最晚 9/29 锁 10/1 当晚（先问房东 Gang 能否续住 + 9/28-10/1 存行李）'},
  {p:'mid',x:'借车 Monster 821 收尾：电话确认保险覆盖（permissive use / 临时加为 covered rider）+ 备用头盔，无盔则 Cycle Gear 买 DOT 全盔'},
  {p:'mid',x:'Carmel / Monterey 10/5 一晚住宿（周中淡季，选可免费取消房型）'},
