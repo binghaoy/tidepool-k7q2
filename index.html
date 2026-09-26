@@ -93,7 +93,7 @@ section.on{display:block}
 .tcard .tag{font-size:11px;font-weight:700;margin-right:8px;color:var(--tc)}
 /* ride map */
 .rm-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:14px;align-items:start}
-#rmap,#pmap{height:calc(100vh - 150px);min-height:480px;border-radius:14px;border:1px solid var(--line);background:#e8ecef;z-index:1}
+#rmap,#pmap,#bmap,#lmap{height:calc(100vh - 150px);min-height:480px;border-radius:14px;border:1px solid var(--line);background:#e8ecef;z-index:1}
 .rm-side{max-height:calc(100vh - 150px);overflow:auto;padding-right:2px}
 .rmtabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 .rmtab{border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:99px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600}
@@ -106,6 +106,15 @@ section.on{display:block}
 .rmtab.on[data-pv="d2"]{background:#16a34a}
 .rmtab.on[data-pv="d3"]{background:#ea580c}
 .rmtab.on[data-pv="d4"]{background:#7c3aed}
+.rmtab.on[data-xv="all"]{background:#1c2128}
+.rmtab.on[data-xv="b1"]{background:#0e7490}
+.rmtab.on[data-xv="b2"]{background:#2563eb}
+.rmtab.on[data-xv="b3"]{background:#b45309}
+.rmtab.on[data-xv="b4"]{background:#16a34a}
+.rmtab.on[data-xv="b5"]{background:#7c3aed}
+.rmtab.on[data-xv="l1"]{background:#dc2626}
+.rmtab.on[data-xv="l2"]{background:#ea580c}
+.rmtab.on[data-xv="l3"]{background:#7c3aed}
 .daycard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .daycard h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--ink)}
 .daycard h2 i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
@@ -143,7 +152,7 @@ footer{text-align:center;font-size:12px;color:var(--sub);padding:26px 0}
   .items b{min-width:40px}
   main{padding:14px}
   .rm-grid{grid-template-columns:1fr}
-  #rmap,#pmap{height:60vh;min-height:380px}
+  #rmap,#pmap,#bmap,#lmap{height:60vh;min-height:380px}
   .rm-side{max-height:none}
 }
 </style>
@@ -175,8 +184,10 @@ header{padding-top:calc(14px + env(safe-area-inset-top))}
   </div>
   <div class="tabs" id="tabs">
     <button class="tab on" data-v="trip">行程总览</button>
+    <button class="tab" data-v="baymap">湾区地图</button>
+<button class="tab" data-v="pdxmap">波特兰地图</button>
     <button class="tab" data-v="ridemap">骑行地图</button>
-    <button class="tab" data-v="pdxmap">波特兰地图</button>
+<button class="tab" data-v="lamap">LA 地图</button>
     <button class="tab" data-v="flights">航班·租车</button>
     <button class="tab" data-v="pack">装备清单</button>
     <button class="tab" data-v="todo">待办</button>
@@ -229,6 +240,40 @@ header{padding-top:calc(14px + env(safe-area-inset-top))}
         <div id="pside"></div>
         <div class="rtips"><b>🌧 雨天 B 计划</b>：D3 海事博物馆全程室内；瀑布步道铺装路小雨照走；Ecola 雨后泥地只去观景台。前一晚查 Cannon Beach tide chart（NOAA），潮池只在低潮前后 1h 可看。</div>
         <div class="rtips"><b>🍮 吃喝 & 落地须知</b>：Bowpicker 鱼薯 ~18:00 打烊，赶不上改 Buoy Beer 河景；Blue Star Doughnut 公认优于 Voodoo；俄勒冈禁止自助加油（全程有人服务）；PDX 还车前机场外围加油更便宜。</div>
+      </div>
+    </div>
+  </section>
+  <section id="v-baymap">
+    <div class="rm-grid">
+      <div id="bmap"></div>
+      <div class="rm-side">
+        <div class="rmtabs" id="btabs">
+          <button class="rmtab on" data-xv="all">全部</button>
+          <button class="rmtab" data-xv="b1">9/26-27 落地</button>
+          <button class="rmtab" data-xv="b2">10/1-2 SF 市区</button>
+          <button class="rmtab" data-xv="b3">10/3 金门北岸</button>
+          <button class="rmtab" data-xv="b4">10/4 南湾</button>
+          <button class="rmtab" data-xv="b5">10/7 早 还车</button>
+        </div>
+        <div class="mleg"><b>读图</b>：实线=去程，虚线=回住处；路线为示意折线，导航以 Google Maps 为准。每个点都带 <b>🧭 Google 导航</b>，按地名跳 Google Maps App。9/28-10/1 在波特兰，10/5-6 骑行见「骑行地图」。</div>
+        <div id="bside"></div>
+        <div class="rtips"><b>🚗 湾区开车须知</b>：SF 砸车窗很常见，停车后车内一件东西都别留，后备箱也别临时放包。金门大桥北行免费、南行约 $10（车牌自动计费，Dollar 另收手续费）。Muir Woods 停车必须提前在 gomuirwoods.com 预约。</div>
+      </div>
+    </div>
+  </section>
+  <section id="v-lamap">
+    <div class="rm-grid">
+      <div id="lmap"></div>
+      <div class="rm-side">
+        <div class="rmtabs" id="ltabs">
+          <button class="rmtab on" data-xv="all">全部</button>
+          <button class="rmtab" data-xv="l1">10/7 落地拜访</button>
+          <button class="rmtab" data-xv="l2">10/8-9 Culver City</button>
+          <button class="rmtab" data-xv="l3">10/10 海边 → LAX</button>
+        </div>
+        <div class="mleg"><b>读图</b>：实线=去程，虚线=回酒店；路线为示意折线，导航以 Google Maps 为准。3 晚都住 Inn at Playa del Rey，离 LAX 和 Culver City 都在 15 分钟左右。</div>
+        <div id="lside"></div>
+        <div class="rtips"><b>🚗 LA 开车须知</b>：405 和 10 号公路 7-10 点、16-19 点很堵，拜访和测试都按堵车预留时间。El Matador 停车场很小、下海滩是陡台阶；Venice 停海滩边的收费停车场，车内清空。10/10 还车前在机场外加满油。</div>
       </div>
     </div>
   </section>
@@ -604,6 +649,159 @@ function pRenderSide(v){
        </div>`).join('')}
    </div>`).join('');
 }
+/* ---- bay / LA maps ---- */
+const BDAYS=[
+{id:'b1',name:'9/26-27 · 落地 + 南湾',color:'#0e7490',
+ sum:'20:10 UA878 落地 SFO 国际航站楼，过边检取行李，Wenjie 接机 → 101 南下约 40min → Mountain View Airbnb。9/27 南湾叙旧；9/28 06:30 Uber 回 SFO 飞波特兰。',
+ route:[[37.6152,-122.3899],[37.5800,-122.3300],[37.5200,-122.2500],[37.4800,-122.1800],[37.4300,-122.1100],[37.4087,-122.0891]],back:null,
+ spots:[
+  {t:'SFO 落地 · Wenjie 接机',ll:[37.6152,-122.3899],q:'San Francisco International Airport International Terminal',time:'9/26 20:10 落地 · 约 21:30 出关',why:'UA878 停国际航站楼。过 CBP 边检、取托运行李、过海关，拿到行李后再给 Wenjie 发消息，约在到达层碰头。'},
+  {t:'Mountain View Airbnb · 入住',ll:[37.4087,-122.0891],q:'469 Sierra Vista Ave, Mountain View, CA 94043',time:'约 22:30 · 住 9/26-28 两晚',why:'469 Sierra Vista Ave A，房东 Gang，自助入住。记得问 Gang 9/28-10/1 能否代存大箱子，波特兰段只带随身包。'}
+ ]},
+{id:'b2',name:'10/1 晚-10/2 · 回湾区 + SF 市区',color:'#2563eb',
+ sum:'10/1 19:54 落地 SFO，AirTrain 到租车中心取 Dollar → Belmont 入住。10/2 开车进城停 Fifth & Mission → 步行 AAU / Union Square / Chinatown / 缆车 → 取车去 Lands End → Ocean Beach 日落 → 回 Belmont。',
+ route:[[37.6281,-122.4003],[37.6000,-122.3700],[37.5650,-122.3200],[37.5301,-122.2844],[37.5800,-122.3300],[37.6400,-122.4000],[37.7100,-122.4000],[37.7834,-122.4050],[37.7863,-122.3995],[37.7879,-122.4075],[37.7907,-122.4056],[37.7846,-122.4078],[37.7834,-122.4050],[37.7760,-122.4400],[37.7800,-122.4800],[37.7798,-122.5116],[37.7780,-122.5135]],
+ back:[[37.7780,-122.5135],[37.7350,-122.4750],[37.6600,-122.4500],[37.6000,-122.3800],[37.5301,-122.2844]],
+ spots:[
+  {t:'SFO 租车中心 · 取 Dollar',ll:[37.6281,-122.4003],q:'SFO Rental Car Center, 780 N McDonnell Rd, San Francisco, CA',time:'10/1 约 20:30',why:'AS1393 19:54 落地，坐 AirTrain 蓝线到 Rental Car Center。Dollar 和 Thrifty 同一个柜台，订单 20:00，晚到半小时一般会留车。'},
+  {t:'Belmont Airbnb · 入住',ll:[37.5301,-122.2844],q:'499 Dale View Ave, Belmont, CA',time:'10/1 约 21:00 · 住 10/1-10/5 四晚',why:'499 Dale View Ave，房东 Kai & Lobat。车停哪里要提前问房东。'},
+  {t:'Fifth & Mission 停车楼',ll:[37.7834,-122.4050],q:'Fifth and Mission Garage, 833 Mission St, San Francisco, CA',time:'10/2 10:30 · 全天约 $30-40',why:'101 北上约 30min。停这里之后市中心几个点都步行，车内和后备箱都清空。'},
+  {t:'AAU 180 New Montgomery',ll:[37.7863,-122.3995],q:'180 New Montgomery St, San Francisco, CA',time:'11:00',why:'回母校看看，走路 8min。SoMa / Yerba Buena 一带转转，当年常去的店午饭。'},
+  {t:'Union Square',ll:[37.7879,-122.4075],q:'Union Square, San Francisco, CA',time:'午饭后',why:'沿 Sutter St 往 Chinatown 方向走。'},
+  {t:'Chinatown · Dragon Gate',ll:[37.7907,-122.4056],q:'Dragon Gate, Grant Ave, San Francisco, CA',time:'下午',why:'Grant Ave 入口的牌坊，往里走就是 Chinatown 主街。'},
+  {t:'Powell & Market 缆车',ll:[37.7846,-122.4078],q:'Powell St Cable Car Turnaround, San Francisco, CA',time:'可选',why:'想坐缆车就在这里上，排队的人多就不坐，看一眼转车台就行。之后回停车楼取车。'},
+  {t:'Lands End 海崖步道',ll:[37.7798,-122.5116],q:'Lands End Lookout, San Francisco, CA',time:'15:30 · 1-1.5h',why:'停车场免费，车内清空。海崖步道能看到金门大桥和 Sutro Baths 遗址。'},
+  {t:'Ocean Beach · 日落',ll:[37.7780,-122.5135],q:'Ocean Beach, San Francisco, CA',time:'日落约 18:50',why:'Cliff House 下面就是 Ocean Beach。这周末金门公园有 Hardly Strictly 音乐节，周边会堵，车停海滩边。看完约 30min 回 Belmont。'}
+ ]},
+{id:'b3',name:'10/3 · 金门大桥北岸 · Sausalito',color:'#b45309',
+ sum:'08:30 出发走 19th Ave 过金门大桥（北行免费）→ Battery Spencer 拍桥 → Hawk Hill → Sausalito 船屋区和午饭 → 可选 Muir Woods → 南行过桥（约 $10）→ Crissy Field → 回 Belmont。',
+ route:[[37.5301,-122.2844],[37.6000,-122.3800],[37.7000,-122.4700],[37.7700,-122.4770],[37.8199,-122.4783],[37.8277,-122.4832],[37.8256,-122.4990],[37.8330,-122.4800],[37.8595,-122.4857],[37.8701,-122.5006],[37.8800,-122.5300],[37.8964,-122.5802],[37.8800,-122.5300],[37.8595,-122.4857],[37.8330,-122.4800],[37.8199,-122.4783],[37.8046,-122.4666]],
+ back:[[37.8046,-122.4666],[37.7700,-122.4700],[37.7000,-122.4700],[37.6000,-122.3800],[37.5301,-122.2844]],
+ spots:[
+  {t:'Battery Spencer',ll:[37.8277,-122.4832],q:'Battery Spencer, Sausalito, CA',time:'09:15 · 30min',why:'过桥第一个出口上坡。拍金门大桥最经典的角度，车位少要早到，车内清空。'},
+  {t:'Hawk Hill',ll:[37.8256,-122.4990],q:'Hawk Hill, Marin Headlands, CA',time:'09:45 · 20min',why:'Battery Spencer 再往上开，更高的角度能把大桥和 SF 天际线一起拍进来。'},
+  {t:'Sausalito · Bridgeway',ll:[37.8595,-122.4857],q:'Bridgeway, Sausalito, CA',time:'11:00 · 逛 + 午饭',why:'沿海主街，对岸是 SF。市营停车场按时收费。午饭可选海边餐厅或 Sausalito Bakery。'},
+  {t:'Gate 5 船屋区',ll:[37.8701,-122.5006],q:'Gate 5 Rd, Sausalito, CA',time:'午饭后 · 30min',why:'水上船屋聚居区，沿栈道走一走，住户私宅只在外面看。'},
+  {t:'Muir Woods 红杉林（可选）',ll:[37.8964,-122.5802],q:'Muir Woods National Monument, Mill Valley, CA',time:'14:30 · 1-1.5h',why:'停车必须提前在 gomuirwoods.com 预约（约 $9-10），没约到就跳过。山路窄弯多。'},
+  {t:'Crissy Field · Marina',ll:[37.8046,-122.4666],q:'Crissy Field, San Francisco, CA',time:'傍晚',why:'南行过桥后就到，草地和海滩正对金门大桥。散步或在 Marina 吃晚饭，之后回 Belmont。'}
+ ]},
+{id:'b4',name:'10/4 · 南湾 · 骑行准备',color:'#16a34a',
+ sum:'上午随意：Stanford 或 Apple Park 访客中心 → 14:00 Sunnyvale 朋友家确认借车保险，空停车场练坡起 20-30 次 → 回 Belmont，看 Big Sur 天气和 Hwy 1 路况，早睡。',
+ route:[[37.5301,-122.2844],[37.4900,-122.2300],[37.4500,-122.1800],[37.4275,-122.1697],[37.4000,-122.1000],[37.3600,-122.0300],[37.3328,-122.0054],[37.3688,-122.0363]],
+ back:[[37.3688,-122.0363],[37.4200,-122.1100],[37.4800,-122.2000],[37.5301,-122.2844]],
+ spots:[
+  {t:'Stanford Main Quad',ll:[37.4275,-122.1697],q:'Main Quad, Stanford University, Stanford, CA',time:'上午 · 可选',why:'主方院和 Memorial Church，校园停车按小时收费。'},
+  {t:'Apple Park 访客中心',ll:[37.3328,-122.0054],q:'Apple Park Visitor Center, 10600 N Tantau Ave, Cupertino, CA',time:'上午 · 可选',why:'免费，屋顶平台能远眺环形主楼，有限定周边。'},
+  {t:'Sunnyvale 朋友家 · 练车',ll:[37.3688,-122.0363],q:'Sunnyvale, CA',time:'14:00',why:'先确认车主保险覆盖你骑（permissive use 或加 covered rider），再在空停车场练坡起：后刹稳车 → 半联动 → 给油 → 松后刹，之后绕周边骑 30min。'}
+ ]},
+{id:'b5',name:'10/7 早 · 还车赶飞机',color:'#7c3aed',
+ sum:'07:00 从 Sunnyvale / Mountain View 住处出发，101 北早高峰约 50min → 07:50 SFO 租车中心还 Dollar（加回取车时油量）→ AirTrain 到 T2 → 10:20 WN1275 飞 LAX。',
+ route:[[37.3688,-122.0363],[37.4000,-122.0700],[37.4500,-122.1400],[37.5000,-122.2200],[37.5600,-122.3100],[37.6000,-122.3700],[37.6281,-122.4003],[37.6165,-122.3841]],back:null,
+ spots:[
+  {t:'10/6 住处（待订）',ll:[37.3688,-122.0363],q:'Sunnyvale, CA',time:'10/7 07:00 出发',why:'10/6 晚住 Sunnyvale 或 Mountain View，全程唯一没订的一晚。订好后把地址发我，这个点改成具体地址。'},
+  {t:'SFO 租车中心 · 还 Dollar',ll:[37.6281,-122.4003],q:'SFO Rental Car Center, 780 N McDonnell Rd, San Francisco, CA',time:'07:50 前',why:'订单 10:00 前还，按行程提前还。还车前在机场外加回取车时的油量。'},
+  {t:'SFO T2 · 值机 WN1275',ll:[37.6165,-122.3841],q:'San Francisco International Airport Terminal 2',time:'10:20 起飞',why:'AirTrain 到 T2。西南确认号 AVDWOL，10/6 10:20 起在西南 App 值机，含 1 件 23kg 托运。'}
+ ]}
+];
+const LDAYS=[
+{id:'l1',name:'10/7 · 落地 LAX · 拜访 That\'s No Moon',color:'#dc2626',
+ sum:'11:45 WN1275 落地 LAX T1 → 接驳巴士到租车中心取 Europcar（订单 12:30）+ 午饭 → 14:00-17:00 拜访 That\'s No Moon → 回 Playa del Rey 入住 → 海滩日落。',
+ route:[[33.9453,-118.4014],[33.9501,-118.3737],[33.9600,-118.3900],[33.9900,-118.4150],[34.0150,-118.4300],[34.0255,-118.4388],[34.0000,-118.4300],[33.9800,-118.4350],[33.9617,-118.4455],[33.9590,-118.4520]],back:null,
+ spots:[
+  {t:'LAX T1 落地',ll:[33.9453,-118.4014],q:'LAX Terminal 1, Los Angeles, CA',time:'11:45',why:'西南航空在 T1。取托运行李后出到路边找「LAX Shuttle」租车中心接驳巴士。'},
+  {t:'Europcar · 取车',ll:[33.9501,-118.3737],q:'5251 W 98th St, Los Angeles, CA 90045',time:'12:30',why:'Trip.com 订单 1359048159821787，PIN 6067，公司报销。取车时间已改到 12:30。附近顺便解决午饭。'},
+  {t:'That\'s No Moon · 拜访',ll:[34.0255,-118.4388],q:'2761 Federal Ave, Los Angeles, CA 90064',time:'14:00-17:00',why:'商务休闲装：Polo 或衬衫加干净裤子。405 下午开始堵，13:15 前出发。'},
+  {t:'Inn at Playa del Rey · 入住',ll:[33.9617,-118.4455],q:'Inn at Playa del Rey, 435 Culver Blvd, Playa del Rey, CA',time:'17:15 · 住 10/7-10/10 三晚',why:'435 Culver Blvd，公司订的，免费停车。傍晚有红酒奶酪时段。'},
+  {t:'Playa del Rey 海滩 · 日落',ll:[33.9590,-118.4520],q:'Playa del Rey Beach, Los Angeles, CA',time:'18:30',why:'从酒店走过去就到，看着 LAX 起飞的飞机和日落。'}
+ ]},
+{id:'l2',name:'10/8-9 · Culver City 线下测试',color:'#ea580c',
+ sum:'10/8 上午自由，可选 Getty Center → 傍晚到 600 Corporate Pointe 装场地 → 10/9 全天线下测试。酒店到场地开车约 15min。',
+ route:[[33.9617,-118.4455],[33.9900,-118.4300],[34.0300,-118.4500],[34.0770,-118.4740],[34.0300,-118.4500],[34.0000,-118.4000],[33.9885,-118.3861]],
+ back:[[33.9885,-118.3861],[33.9750,-118.4200],[33.9617,-118.4455]],
+ spots:[
+  {t:'Getty Center（可选）',ll:[34.0770,-118.4740],q:'Getty Center, 1200 Getty Center Dr, Los Angeles, CA',time:'10/8 上午 · 2h',why:'门票免费但要在官网预约时段，停车约 $25。山顶小火车上去，建筑和花园比展品更值得看。'},
+  {t:'600 Corporate Pointe · 测试场地',ll:[33.9885,-118.3861],q:'600 Corporate Pointe, Culver City, CA 90230',time:'10/8 傍晚装场 · 10/9 全天测试',why:'酒店开车约 15min。10/8 傍晚先把设备装好，10/9 测试日早点出门避开早高峰。'}
+ ]},
+{id:'l3',name:'10/10 · Malibu → Venice → LAX',color:'#7c3aed',
+ sum:'11:00 退房，行李放后备箱 → PCH 北上 Malibu El Matador → 回程 Venice 运河和海滩步道看日落 → 20:30 Europcar 还车（先加满油）→ 22:00 LAX 国际航站楼值机 NH105。',
+ route:[[33.9617,-118.4455],[33.9900,-118.4700],[34.0200,-118.5000],[34.0350,-118.5500],[34.0400,-118.6500],[34.0350,-118.7500],[34.0380,-118.8745]],
+ back:[[34.0380,-118.8745],[34.0350,-118.7500],[34.0400,-118.6500],[34.0350,-118.5500],[34.0200,-118.5000],[33.9869,-118.4736],[33.9600,-118.4200],[33.9501,-118.3737],[33.9433,-118.4081]],
+ spots:[
+  {t:'El Matador State Beach',ll:[34.0380,-118.8745],q:'El Matador State Beach, Malibu, CA',time:'中午 · 1h',why:'Malibu 最上镜的海蚀洞和礁石海滩。停车场很小，下海滩是陡台阶，车内别留东西。'},
+  {t:'Venice 运河 + 海滩步道',ll:[33.9869,-118.4736],q:'Venice Canals, Los Angeles, CA',time:'下午 · 日落',why:'先逛运河小桥和两边的房子，再去海滩步道看街头表演和日落，车停海滩边收费停车场。'},
+  {t:'Europcar · 还车',ll:[33.9501,-118.3737],q:'5251 W 98th St, Los Angeles, CA 90045',time:'20:30',why:'先在附近加满油，还车后坐接驳巴士约 10min 到航站楼。'},
+  {t:'LAX 国际航站楼 · 值机 NH105',ll:[33.9433,-118.4081],q:'Tom Bradley International Terminal, LAX, Los Angeles, CA',time:'22:00 值机 · 00:50 起飞',why:'全日空在 Tom Bradley 国际航站楼。NH105 飞羽田，10/12 转 NH965 回深圳，行李直挂。'}
+ ]}
+];
+const XCFG={bay:{el:'bmap',side:'bside',tabs:'btabs',days:BDAYS},la:{el:'lmap',side:'lside',tabs:'ltabs',days:LDAYS}};
+const XM={},TPK='tp-base';
+function xNav(s){return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(s.q)+'&travelmode=driving';}
+function xLab(s,i){if(/入住|住处/.test(s.t))return '🏨';if(/落地|值机/.test(s.t))return '✈';return String(i+1);}
+function xInit(k){
+  if(XM[k])return;
+  const c=XCFG[k];
+  if(typeof L==='undefined'){document.getElementById(c.el).innerHTML='<div style="padding:24px;font-size:13px;color:#6b7280">地图库加载失败，刷新重试；右侧清单不受影响。</div>';xSide(k,'all');return;}
+  const m=L.map(c.el,{scrollWheelZoom:true}).setView(c.days[0].route[0],10);
+  const T={amap:L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:['1','2','3','4'],attribution:'&copy; 高德地图'}),
+    osm:L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}),
+    g:L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&hl=zh-CN&gl=US&x={x}&y={y}&z={z}',{maxZoom:20,subdomains:['0','1','2','3'],attribution:'&copy; Google'})};
+  let base='amap';try{const v=localStorage.getItem(TPK);if(v&&T[v])base=v}catch(_){}
+  T[base].addTo(m);
+  const sw=L.control({position:'topright'});
+  sw.onAdd=function(){const d=L.DomUtil.create('div','basemap-sw');d.innerHTML=[['amap','高德'],['osm','OSM'],['g','Google']].map(x=>'<button data-b="'+x[0]+'"'+(x[0]===base?' class="on"':'')+'>'+x[1]+'</button>').join('');L.DomEvent.disableClickPropagation(d);
+    d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.b===base)return;m.removeLayer(T[base]);base=b.dataset.b;T[base].addTo(m);try{localStorage.setItem(TPK,base)}catch(_){}for(const x of d.querySelectorAll('button'))x.classList.toggle('on',x===b)});return d};
+  sw.addTo(m);
+  const layers={},mks={};
+  c.days.forEach(d=>{
+    const g=L.layerGroup();
+    if(d.back)L.polyline(d.back,{color:d.color,weight:3,opacity:.45,dashArray:'8,8'}).addTo(g);
+    L.polyline(d.route,{color:d.color,weight:4,opacity:.85}).addTo(g);
+    d.spots.forEach((s,i)=>{
+      const ic=L.divIcon({className:'',iconSize:[24,24],iconAnchor:[12,12],html:`<div style="width:24px;height:24px;border-radius:50%;background:${d.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">${xLab(s,i)}</div>`});
+      const mk=L.marker(s.ll,{icon:ic}).addTo(g);
+      mk.bindPopup(`<div class="pop-t">${s.t}</div><span class="pop-c" style="background:${d.color}">${d.name.split('·')[0].trim()}</span><div class="pop-time">⏱ ${s.time}</div><div class="pop-note">${s.why}</div><a class="pop-nav" target="_blank" rel="noopener" href="${xNav(s)}">🧭 Google 导航</a>`);
+      mk.on('click',()=>xHl(k,d.id,i,false));
+      mks[d.id+'-'+i]=mk;
+    });
+    layers[d.id]=g;
+  });
+  XM[k]={m,layers,mks};
+  xShow(k,'all');xSide(k,'all');
+  document.getElementById(c.tabs).addEventListener('click',e=>{
+    const b=e.target.closest('.rmtab');if(!b||!b.dataset.xv)return;
+    for(const t of document.querySelectorAll('#'+c.tabs+' .rmtab'))t.classList.toggle('on',t===b);
+    xShow(k,b.dataset.xv);xSide(k,b.dataset.xv);
+  });
+}
+function xShow(k,v){
+  const X=XM[k],c=XCFG[k];if(!X)return;
+  Object.values(X.layers).forEach(g=>X.m.removeLayer(g));
+  const ds=c.days.filter(d=>v==='all'||d.id===v);
+  ds.forEach(d=>X.layers[d.id].addTo(X.m));
+  const pts=[];ds.forEach(d=>{pts.push(...d.route);if(d.back)pts.push(...d.back);d.spots.forEach(s=>pts.push(s.ll))});
+  X.m.fitBounds(L.latLngBounds(pts).pad(.12));
+}
+function xHl(k,dayId,idx,fly){
+  const c=XCFG[k];
+  for(const el of document.querySelectorAll('#'+c.side+' .rspot'))el.style.background='';
+  const el=document.getElementById('xsp-'+k+'-'+dayId+'-'+idx);
+  if(el){el.style.background='#eef2f7';el.scrollIntoView({block:'nearest',behavior:'smooth'});}
+  const X=XM[k];
+  if(fly&&X){const mk=X.mks[dayId+'-'+idx];Object.values(X.mks).forEach(x=>x.setZIndexOffset(0));mk.setZIndexOffset(2000);X.m.flyTo(c.days.find(d=>d.id===dayId).spots[idx].ll,16,{duration:.8});setTimeout(()=>mk.openPopup(),850);}
+}
+function xSide(k,v){
+  const c=XCFG[k];
+  document.getElementById(c.side).innerHTML=c.days.filter(d=>v==='all'||d.id===v).map(d=>`
+   <div class="daycard">
+     <h2><i style="background:${d.color}"></i>${d.name}</h2>
+     <div class="dsum">${d.sum}</div>
+     ${d.spots.map((s,i)=>`
+       <div class="rspot" id="xsp-${k}-${d.id}-${i}" onclick="xHl('${k}','${d.id}',${i},true)">
+         <div class="n" style="background:${d.color}">${xLab(s,i)}</div>
+         <div class="st"><b>${s.t}</b><span>⏱ ${s.time}</span><div class="why">${s.why}</div><a class="nav-link" target="_blank" rel="noopener" onclick="event.stopPropagation()" href="${xNav(s)}">🧭 Google 导航</a></div>
+       </div>`).join('')}
+   </div>`).join('');
+}
 /* ---- tabs ---- */
 document.getElementById('tabs').addEventListener('click',e=>{
   const b = e.target.closest('.tab'); if(!b) return;
@@ -611,6 +809,7 @@ document.getElementById('tabs').addEventListener('click',e=>{
   document.querySelectorAll('section').forEach(s=>s.classList.toggle('on', s.id==='v-'+b.dataset.v));
   if(b.dataset.v==='ridemap'){ initRideMap(); setTimeout(()=>{ if(rmap) rmap.invalidateSize(); },60); }
   if(b.dataset.v==='pdxmap'){ initPdxMap(); setTimeout(()=>{ if(pmap) pmap.invalidateSize(); },60); }
+  if(b.dataset.v==='baymap'||b.dataset.v==='lamap'){ const k=b.dataset.v==='baymap'?'bay':'la'; xInit(k); setTimeout(()=>{ if(XM[k]) XM[k].m.invalidateSize(); },60); }
 });
 /* ---- countdown ---- */
 const dep = new Date('2026-09-26T22:30:00+08:00');
