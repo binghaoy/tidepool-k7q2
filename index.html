@@ -249,8 +249,8 @@ const PH = {
 };
 const WD = ['日','一','二','三','四','五','六'];
 const DAYS = [
- {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['16:30','宝安出发，打车去深圳湾口岸（带护照 + 港澳通行证）'],['17:15','深圳湾过关：内地出境 → 香港入境（港澳通行证走普通通道）'],['18:00','港方口岸坐跨境小巴去机场 T1（¥150；备选 B4 巴士 ~HK$30）'],['19:00','T1 United 柜台托运行李、换登机牌（21:30 截止值机）'],['22:30','UA878 HKG 起飞（已出票）'],['20:10','[美西时间] 落地 SFO，交 CBP 入境'],['21:30','取行李，Uber/Lyft ~40min → Sunnyvale'],['深夜','落地即睡，开始倒时差']],stay:'Sunnyvale 酒店',mv:'深圳湾 + 小巴 ¥150 · UA878 · Uber $35-50'},
- {d:'2026-09-27',ph:'bay',t:'南湾叙旧',loc:'Sunnyvale / 南湾',items:[['上午','自然醒，倒时差'],['中午','湾区朋友叙旧饭局']],stay:'Mountain View Airbnb（已订）'},
+ {d:'2026-09-26',ph:'fly',t:'出发 · 香港→旧金山',loc:'HKG ✈ SFO → Mountain View',items:[['16:30','宝安出发，打车去深圳湾口岸（带护照 + 港澳通行证）'],['17:15','深圳湾过关：内地出境 → 香港入境（港澳通行证走普通通道）'],['18:00','港方口岸坐跨境小巴去机场 T1（¥150；备选 B4 巴士 ~HK$30）'],['19:00','T1 United 柜台托运行李、换登机牌（21:30 截止值机）'],['22:30','UA878 HKG 起飞（已出票）'],['20:10','[美西时间] 落地 SFO，交 CBP 入境'],['21:30','取行李出关，Wenjie 接机 → Mountain View（~40min）'],['深夜','Airbnb 自助入住（469 Sierra Vista Ave A, Mountain View, CA 94043，房东 Gang），倒时差']],stay:'Mountain View Airbnb（已订 · 469 Sierra Vista Ave A）',mv:'深圳湾 + 小巴 ¥150 · UA878 · Wenjie 接机'},
+ {d:'2026-09-27',ph:'bay',t:'南湾叙旧',loc:'Sunnyvale / 南湾',items:[['上午','自然醒，倒时差'],['中午','湾区朋友叙旧饭局']],stay:'Mountain View Airbnb（已订 · 469 Sierra Vista Ave A）'},
  {d:'2026-09-28',ph:'pdx',t:'飞波特兰 · 哥伦比亚河峡谷',loc:'SFO ✈ PDX → Columbia Gorge',items:[['06:30','Airbnb 退房，Uber 赴 SFO（周一早高峰预留 1h）'],['08:23','AS1411 SFO→PDX 起飞（已出票）'],['10:09','落地 PDX，Rental Car Center 取车（Alamo，已订）'],['中午','I-84 东进 Columbia River Gorge（45min）'],['下午','Latourell Falls → Multnomah Falls → Hood River'],['晚','Evermore Guesthouse 自助入住（3860 SE Clinton St，15:00 后），SE Division St 晚饭']],stay:'Evermore Guesthouse（已订）',mv:'租车 Day 1'},
  {d:'2026-09-29',ph:'pdx',t:'波特兰 → Astoria',loc:'US-30 北上 1h45m',items:[['上午','日本花园 / Powell\'s 书店'],['中午','food pods 午餐'],['下午','驱车北上 Astoria'],['傍晚','Astoria Column 看日落（154 级旋转楼梯）']],stay:'The Inn at 515 15th（已订）',mv:'租车 Day 2'},
  {d:'2026-09-30',ph:'pdx',t:'Astoria → Cannon Beach',loc:'US-101 南下 40min',items:[['上午','Goondocks《七宝奇谋》取景地 + 海事博物馆 + 哥伦比亚河口'],['下午','南下到 Cannon Beach'],['傍晚','Haystack Rock 日落（退潮时可走近）']],stay:'Cannon Beach 酒店',mv:'租车 Day 3'},
@@ -268,7 +268,7 @@ const DAYS = [
  {d:'2026-10-12',ph:'home',t:'羽田转机 → 深圳',loc:'HND T2→T3 ✈ SZX',items:[['05:00','落地羽田 T2'],['上午','空侧转机巴士 T2→T3（同日转机免签，行李直挂）'],['11:10','NH965 起飞 → 15:10 落地深圳']],stay:'到家 🏠'}
 ];
 const FLIGHTS = [
- {rt:'HKG → SFO',dt:'9/26 周六',dep:'22:30',arr:'20:10 当日',no:'UA878 美联航 · 787',st:'booked',note:'已出票（自费 CNY 3,686 = 票价 1,873 + 税 1,813）· 电子票号 0167508899133。飞行约 12.5h，落地后 BART 末班车约 23:00 赶得上但偏紧，行李多直接 Uber $35-50。'},
+ {rt:'HKG → SFO',dt:'9/26 周六',dep:'22:30',arr:'20:10 当日',no:'UA878 美联航 · 787',st:'booked',note:'已出票（自费 CNY 3,686 = 票价 1,873 + 税 1,813）· 电子票号 0167508899133。飞行约 12.5h，落地后 Wenjie 接机，直接去 Mountain View Airbnb（469 Sierra Vista Ave A）。'},
  {rt:'SFO → PDX',dt:'9/28 周一',dep:'08:23',arr:'10:09',no:'AS1411 阿拉斯加 · 经济舱',st:'booked',note:'已出票（自费 $228.30，不可退）（0 托运 · 2 随身）。Sunnyvale → SFO 周一早高峰预留 1h+，06:30 前上车；提前 24h 在 Alaska App 值机选座。'},
  {rt:'PDX → SFO',dt:'10/1 周四',dep:'17:53',arr:'19:54',no:'AS1393 阿拉斯加 · 经济舱',st:'booked',note:'已出票（自费 $228.30，不可退）（0 托运 · 2 随身）。行李仅 Little America 背包，还车后无托运负担；落地 SFO 后 AirTrain 到租车中心取 Dollar。'},
  {rt:'SFO → LAX',dt:'10/7 周三',dep:'10:20 T2',arr:'11:45 T1',no:'WN1275 西南航空',st:'booked',note:'已出票（自费 ¥1,325，不得退改），含 1 件 23kg 托运。西南确认号 <b>AVDWOL</b> · 电子票号 5267588199511 · 同程订单 ITX9XG260925BP5Z7458。10/6 10:20 起可在西南 App 用 AVDWOL + YAN 值机分组。07:50 前到 SFO 租车中心还 Dollar，AirTrain 去 T2。'},
