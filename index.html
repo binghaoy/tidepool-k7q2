@@ -486,14 +486,14 @@ const PDAYS=[
 {
  id:'d2',name:'D2 · 9/29 周二 · Powell\'s → Astoria 市中心',color:'#16a34a',
  sum:'10:00 Powell\'s 总店 → food pods 午餐 → 13:00 US-30 北上 1h45m → 15:00 入住 → 《七宝奇谋》市中心 ①-⑤：监狱 → Flavel House → 球场旧址 → 18:15 Astoria Column 日落 → 保龄球馆。',
- route:[[45.5031,-122.6229],[45.5150,-122.6600],[45.5231,-122.6819],[45.5185,-122.6780],[45.5400,-122.7800],[45.6000,-122.9200],[45.7200,-123.0900],[45.8500,-123.2200],[46.0500,-123.4200],[46.1500,-123.6500],[46.1877,-123.8273],[46.1885,-123.8355],[46.1881,-123.8351],[46.1878,-123.8225],[46.1813,-123.8176],[46.1837,-123.8596]],
+ route:[[45.5031,-122.6229],[45.5150,-122.6600],[45.5231,-122.6819],[45.5185,-122.6780],[45.5400,-122.7800],[45.6000,-122.9200],[45.7200,-123.0900],[45.8500,-123.2200],[46.0500,-123.4200],[46.1500,-123.6500],[46.1877,-123.8273],[46.1885,-123.8355],[46.1880,-123.8342],[46.1878,-123.8225],[46.1813,-123.8176],[46.1837,-123.8596]],
  back:null,
  spots:[
   {ll:[45.5231,-122.6819],t:"Powell's City of Books",time:'10:00 开门 · 逛到 11:30',why:'世界最大独立书店，1005 W Burnside。三楼 Rare Book Room 开到 17:00。车停 SmartPark 停车楼，车内清空。'},
   {ll:[45.5185,-122.6780],t:'Food Pod · 午餐',time:'11:45',why:'Pearl / Downtown 的美食车集中点，吃完 13:00 出发 US-30 去 Astoria。'},
   {ll:[46.1877,-123.8273],t:'The Inn at 515 15th · 入住',time:'15:00 · 放行李',why:'已订，免费停车。之后市中心几个点都在 1km 内。'},
   {ll:[46.1885,-123.8355],t:'① Oregon Film Museum',time:'15:30 · 45min',why:'732 Duane St 旧县监狱，电影开场 Jake Fratelli 越狱就在这里。可以拍犯人照，门口有 Fratelli 吉普。'},
-  {ll:[46.1881,-123.8351],t:'② Flavel House',time:'16:30 · 45min',why:'441 8th St，Mikey 爸爸上班的博物馆，就在监狱对面。'},
+  {ll:[46.1880,-123.8342],t:'② Flavel House',time:'16:30 · 45min',why:'441 8th St，Mikey 爸爸上班的博物馆，就在监狱对面。'},
   {ll:[46.1878,-123.8225],t:'③ John Warren Field 旧址',time:'路过',why:'Exchange St 18th-20th，Andy 啦啦队那场戏。球场已拆，开车路过即可。'},
   {ll:[46.1813,-123.8176],t:'④ Astoria Column · 日落',time:'18:15 · 日落约 18:55',why:'164 级旋转楼梯登顶，河口 + 小镇 + 太平洋 360°。塔底礼品店买木头滑翔机，塔顶放飞是当地传统。'},
   {ll:[46.1837,-123.8596],t:'⑤ Lower Columbia Bowl',time:'19:30 · 晚饭后',why:'826 W Marine Dr，Chunk 把披萨糊在窗户上的那家保龄球馆，可以签留言簿。晚饭选 Buoy Beer 或 Fort George。'}
@@ -546,8 +546,8 @@ function initPdxMap(){
     if(d.back){L.polyline(d.back,{color:d.color,weight:3,opacity:.45,dashArray:'8,8'}).addTo(g);}
     L.polyline(d.route,{color:d.color,weight:4,opacity:.85}).addTo(g);
     d.spots.forEach((s,i)=>{
-      const ic=L.divIcon({className:'',iconSize:[24,24],iconAnchor:[12,12],html:`<div style="width:24px;height:24px;border-radius:50%;background:${d.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">${i+1}</div>`});
-      const mk=L.marker(s.ll,{icon:ic}).addTo(g);
+      const ic=L.divIcon({className:'',iconSize:[24,24],iconAnchor:[12,12],html:`<div style="width:24px;height:24px;border-radius:50%;background:${d.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">${pLab(s)}</div>`});
+      const mk=L.marker(s.ll,{icon:ic,zIndexOffset:PCIRC.indexOf(s.t.charAt(0))>=0?500:0}).addTo(g);
       mk.bindPopup(`<div class="pop-t">${s.t}</div><span class="pop-c" style="background:${d.color}">${d.name.split('·')[0].trim()}</span><div class="pop-time">⏱ ${s.time}</div><div class="pop-note">${s.why}</div><a class="pop-nav" target="_blank" rel="noopener" href="${gnav(s)}">🧭 Google 导航</a>`);
       mk.on('click',()=>pHl(d.id,i,false));
       pmarkerById[d.id+'-'+i]=mk;
@@ -561,26 +561,32 @@ function initPdxMap(){
     pShow(b.dataset.pv);pRenderSide(b.dataset.pv);
   });
 }
+const PCIRC='①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮';
+function pLab(s){const k=PCIRC.indexOf(s.t.charAt(0));if(k>=0)return String(k+1);if(/入住/.test(s.t))return '🏨';if(/机场|PDX/.test(s.t))return '✈';return '•';}
+function pTitle(s){return PCIRC.indexOf(s.t.charAt(0))>=0?s.t.slice(1).trim():s.t;}
+const PZOOM={d2:[[46.1795,-123.8625],[46.1925,-123.8150]],d3:[[46.1840,-123.8450],[46.1960,-123.7920]]};
 function pShow(v){
   Object.values(players).forEach(g=>pmap.removeLayer(g));
   if(v==='all'){Object.values(players).forEach(g=>g.addTo(pmap));pmap.fitBounds([[45.25,-123.99],[46.28,-121.4]],{padding:[30,30]});}
   else{const d=PDAYS.find(x=>x.id===v);players[v].addTo(pmap);const pts=[...d.route];pmap.fitBounds(L.latLngBounds(pts).pad(.25));}
 }
+function pZoom(id){pmap.fitBounds(PZOOM[id]);}
 function pHl(dayId,idx,fly){
   document.querySelectorAll('.rspot').forEach(el=>el.style.background='');
   const el=document.getElementById('psp-'+dayId+'-'+idx);
   if(el){el.style.background='#eef2f7';el.scrollIntoView({block:'nearest',behavior:'smooth'});}
-  if(fly){pmap.flyTo(PDAYS.find(d=>d.id===dayId).spots[idx].ll,13,{duration:.8});setTimeout(()=>pmarkerById[dayId+'-'+idx].openPopup(),850);}
+  if(fly){const m=pmarkerById[dayId+'-'+idx];Object.values(pmarkerById).forEach(x=>x.setZIndexOffset(0));m.setZIndexOffset(2000);pmap.flyTo(PDAYS.find(d=>d.id===dayId).spots[idx].ll,17,{duration:.8});setTimeout(()=>m.openPopup(),850);}
 }
 function pRenderSide(v){
   document.getElementById('pside').innerHTML=PDAYS.filter(d=>v==='all'||d.id===v).map(d=>`
    <div class="daycard">
      <h2><i style="background:${d.color}"></i>${d.name}</h2>
      <div class="dsum">${d.sum}</div>
+     ${PZOOM[d.id]?`<button class="rmtab" style="margin:6px 0" onclick="pZoom('${d.id}')">🔍 放大 Astoria 市区</button>`:''}
      ${d.spots.map((s,i)=>`
        <div class="rspot" id="psp-${d.id}-${i}" onclick="pHl('${d.id}',${i},true)">
-         <div class="n" style="background:${d.color}">${i+1}</div>
-         <div class="st"><b>${s.t}</b><span>⏱ ${s.time}</span><div class="why">${s.why}</div><a class="nav-link" target="_blank" rel="noopener" onclick="event.stopPropagation()" href="${gnav(s)}">🧭 Google 导航</a></div>
+         <div class="n" style="background:${d.color}">${pLab(s)}</div>
+         <div class="st"><b>${pTitle(s)}</b><span>⏱ ${s.time}</span><div class="why">${s.why}</div><a class="nav-link" target="_blank" rel="noopener" onclick="event.stopPropagation()" href="${gnav(s)}">🧭 Google 导航</a></div>
        </div>`).join('')}
    </div>`).join('');
 }
