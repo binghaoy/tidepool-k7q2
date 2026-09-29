@@ -115,9 +115,6 @@ section.on{display:block}
 .mleg b{color:var(--ink)}
 .rtips{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ride);border-radius:10px;padding:10px 14px;font-size:12.5px;color:#374151;margin-bottom:12px}
 .rtips b{color:var(--ink)}
-.basemap-sw{background:#fff;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,.4);overflow:hidden;display:flex}
-.basemap-sw button{border:0;background:#fff;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--sub);font-weight:600}
-.basemap-sw button.on{background:var(--ink);color:#fff}
 .pop-t{font-size:14.5px;font-weight:700}
 .pop-c{display:inline-block;font-size:11px;color:#fff;border-radius:99px;padding:1px 9px;margin:4px 0 6px}
 .pop-time{font-size:12.5px;color:var(--sub)}

@@ -1,10 +1,10 @@
-const VERSION='tp-dashboard-20260929-5';
+const VERSION='tp-dashboard-20260929-6';
 const CORE=['./','index.html','booking.html','booking-redirect.js','styles.css','core.js','app.js','maps.js','conditions.js','offline.js','data/init.js','data/trip.js','data/portland.js','data/ride.js','data/bay.js','data/la.js','data/plans.js','data/photos.js','leaflet.css','leaflet.js','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
-const TILE='tp-tiles-v2',PHOTO=VERSION+'-photos';
+const TILE='tp-google-tiles-v3',PHOTO=VERSION+'-photos';
 const regions={portland:['p11','p12','p13','p14','p15','p16','p17','p18','p20','p23','p25','p26','p27','p28','p29','p30','p31'],ride:['p00','p01','p02','p03','p04','p05','p06','p07','p08','p09','p10'],bay:[],la:[]};
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('tp-')&&![VERSION,TILE,PHOTO].includes(k)).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-const isTile=u=>/^(?:webrd0[1-4]\.is\.autonavi\.com|tile\.openstreetmap\.org|mt[0-3]\.google\.com)$/.test(u.hostname);
+const isTile=u=>/^mt[0-3]\.google\.com$/.test(u.hostname);
 async function tileFetch(request){const c=await caches.open(TILE),hit=await c.match(request);if(hit)return hit;const r=await fetch(request);if(r.ok||r.type==='opaque'){await c.put(request,r.clone());const keys=await c.keys();if(keys.length>240)await Promise.all(keys.slice(0,keys.length-240).map(k=>c.delete(k)));}return r;}
 self.addEventListener('fetch',e=>{
  const u=new URL(e.request.url);if(e.request.method!=='GET')return;
